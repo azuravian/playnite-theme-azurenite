@@ -1,0 +1,86 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:Double x:Key="FontSizeSmall">12</sys:Double>
+    <sys:Double x:Key="FontSize">14</sys:Double>
+    <sys:Double x:Key="FontSizeLarge">15</sys:Double>
+    <sys:Double x:Key="FontSizeLarger">20</sys:Double>
+    <sys:Double x:Key="FontSizeLargest">29</sys:Double>
+    <FontFamily x:Key="FontFamily">Arial</FontFamily>
+    <Thickness x:Key="PopupBorderThickness">0.5</Thickness>
+    <Thickness x:Key="ControlBorderThickness">1</Thickness>
+    <sys:Double x:Key="EllipseBorderThickness">1</sys:Double>
+    <CornerRadius x:Key="ControlCornerRadius">2</CornerRadius>
+
+    <Color x:Key="BlackColor">#FF000000</Color>
+    <Color x:Key="WhiteColor">#FFFFFFFF</Color>
+    <Color x:Key="TextColor">#f2f2f2</Color>
+    <Color x:Key="TextColorDarker">#a3a3a3</Color>
+    <Color x:Key="TextColorDark">#FF000000</Color>
+    <Color x:Key="MainColor">#FF65636F</Color>
+    <Color x:Key="MainColorDark">#FF25282F</Color>
+    <Color x:Key="HoverColor">#247BA0</Color>
+    <Color x:Key="GlyphColor">#55CDFF</Color>
+    <Color x:Key="HighlightGlyphColor">#696773</Color>
+    <Color x:Key="PopupBackgroundColor">#171e26</Color>
+    <Color x:Key="PopupBorderColor">Transparent</Color>
+    <Color x:Key="BackgroundToneColor">#2C3A67</Color>
+    <Color x:Key="GridItemBackgroundColor">#151e3d</Color>
+    <Color x:Key="PanelSeparatorColor">#662C3A67</Color>
+	
+	<!-- darklinkpower ExtraMetadata plugin -->
+    <sys:Boolean x:Key="UseAbsoluteExtraMetadataPath">true</sys:Boolean>
+    <sys:String x:Key="ExtraMetadataPath">C:\Users\azure\AppData\Roaming\Playnite</sys:String>
+	<sys:Double x:Key="DetailsViewLogoMaxWidth">500</sys:Double>
+	<sys:Double x:Key="DetailsViewLogoMaxHeight">200</sys:Double>
+
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
+    <SolidColorBrush x:Key="TextBrushDarker" Color="{DynamicResource TextColorDarker}" />
+    <SolidColorBrush x:Key="TextBrushDark" Color="{DynamicResource TextColorDark}" />
+    <SolidColorBrush x:Key="NormalBrush" Color="{DynamicResource MainColor}" />
+    <SolidColorBrush x:Key="NormalBrushDark" Color="{DynamicResource MainColorDark}" />
+    <SolidColorBrush x:Key="NormalBorderBrush" Color="#FF2658A6" />
+    <SolidColorBrush x:Key="HoverBrush" Color="{DynamicResource HighlightGlyphColor}" />
+    <LinearGradientBrush x:Key="GlyphBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+		<GradientStop Color="#FF628BBE" Offset="0"/>
+		<GradientStop Color="#FF3D73B7" Offset="1"/>
+	</LinearGradientBrush>
+	<LinearGradientBrush x:Key="PlayButtonBrush" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
+        <GradientStop Color="#FF18B04E" Offset="1"/>
+        <GradientStop Color="#FF50C832" Offset="0"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GroupBrush" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
+        <GradientStop Color="#292f3b" Offset="0"/>
+        <GradientStop Color="#242930" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="HighlightGlyphBrush" Color="#8755CDFF"/>
+    <SolidColorBrush x:Key="PopupBorderBrush" Color="{DynamicResource PopupBorderColor}" />
+    <SolidColorBrush x:Key="TooltipBackgroundBrush" Color="#4c515a" />
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="GridItemBackgroundBrush" Color="{DynamicResource GridItemBackgroundColor}" />
+    <SolidColorBrush x:Key="PanelSeparatorBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="PopupBackgroundBrush" Color="#3c4047" />
+	<SolidColorBrush x:Key="ExpanderBackgroundBrush" Color="#FF252B38" />
+    <SolidColorBrush x:Key="PositiveRatingBrush" Color="#78ffa0" />
+    <SolidColorBrush x:Key="NegativeRatingBrush" Color="#ff6b6b" />
+    <SolidColorBrush x:Key="MixedRatingBrush" Color="#fffca1" />
+	<SolidColorBrush x:Key="WindowBackgourndBrush" Color="#0420BEE5"/>
+    
+    <LinearGradientBrush x:Key="ContextBrush" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
+        <GradientStop Color="#235dce" Offset="1"/>
+        <GradientStop Color="#3a9cee" Offset="0"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PlayButtonHover" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
+        <GradientStop Color="#70d61e" Offset="0"/>
+        <GradientStop Color="#38be3c" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ContextHover" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
+        <GradientStop Color="#47bfff" Offset="0"/>
+        <GradientStop Color="#3081e0" Offset="1"/>
+    </LinearGradientBrush>
+
+</ResourceDictionary>

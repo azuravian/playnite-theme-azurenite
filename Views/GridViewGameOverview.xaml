@@ -1,0 +1,198 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    mc:Ignorable="d">
+
+    <Style TargetType="Path" x:Key="VectorIcon">
+        <Setter Property="Fill" Value="#a3a3a3"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Opacity" Value="0.85"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"  Value="True">
+                <Setter Property="Fill" Value="White"/>
+                <Setter Property="Opacity" Value="1.00"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}"  Value="True">
+                <Setter Property="Fill" Value="White"/>
+                <Setter Property="Opacity" Value="1.00"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type GridViewGameOverview}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewGameOverview}">
+                    <Border Padding="10,0,5,0" BorderBrush="{DynamicResource PanelSeparatorBrush}"  Background="#7F000000"
+                            d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameDetailsIntance}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderThickness" Value="1,0,0,0" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Settings GridViewDetailsPosition}" Value="Left">
+                                        <Setter Property="BorderThickness" Value="0,0,1,0" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Settings ShowPanelSeparators}" Value="False">
+                                        <Setter Property="BorderThickness" Value="0" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <DockPanel>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Content="r" FontFamily="Marlett"
+                                    Style="{StaticResource SimpleButton}"
+                                    Command="{MainViewModel CloseGameSideBarCommand}"
+                                    DockPanel.Dock="Top" Margin="0,10,15,5" />
+
+                            <TextBlock Text="{DynamicResource LOCErrorNoGameSelected}" 
+                                   Margin="0,20,0,0" DockPanel.Dock="Top"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <Trigger Property="DataContext" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <DockPanel DockPanel.Dock="Top">
+                                <DockPanel.Style>
+                                    <Style TargetType="DockPanel">
+                                        <Style.Triggers>
+                                            <Trigger Property="DataContext" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DockPanel.Style>
+
+                                <DockPanel DockPanel.Dock="Top">
+                                    <Image Name="PART_ImageIcon" DockPanel.Dock="Left" Height="Auto" Width="Auto"
+                                           RenderOptions.BitmapScalingMode="Fant" Margin="0,0,10,0" />
+                                </DockPanel>
+
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"
+                                            Margin="0,10,0,10">
+                                    <Button Name="PART_ButtonPlayAction" Cursor="Hand"
+                                             Style="{DynamicResource PlayButton}" />
+                                    <Button Name="PART_ButtonContextAction" 
+                                            Style="{DynamicResource ContextButton}"/>
+                                    <Button Style="{DynamicResource ButtonGameEdit}" Name="PART_ButtonMoreActions" Margin="120,0,0,0" VerticalAlignment="Top" Width="35" Height="35" Padding="0" Cursor="Hand">
+                                        <Path Style="{StaticResource VectorIcon}" Stretch="Fill" Width="17" Height="17" Data="m 12.017193 16.202377 a 4.1923406 4.1923406 0 0 1 -4.192339 -4.19234 4.1923406 4.1923406 0 0 1 4.192339 -4.1923414 4.1923406 4.1923406 0 0 1 4.192342 4.1923414 4.1923406 4.1923406 0 0 1 -4.192342 4.19234 m 8.89974 -3.030464 c 0.04791 -0.3833 0.08384 -0.7666 0.08384 -1.161876 0 -0.395279 -0.03594 -0.790556 -0.08384 -1.197813 L 23.444317 8.8597913 C 23.6719 8.68012 23.731791 8.3567105 23.588054 8.0931924 L 21.19243 3.9487643 C 21.048693 3.6852457 20.725284 3.5774426 20.461766 3.6852457 L 17.479214 4.8830572 C 16.856352 4.4159106 16.209535 4.0086547 15.454912 3.7092019 L 15.011723 0.53500108 C 14.963809 0.24752629 14.712269 0.0319202 14.412817 0.0319202 H 9.6215717 c -0.2994535 0 -0.5509933 0.21560609 -0.5989059 0.50308088 L 8.5794752 3.7092019 C 7.824854 4.0086547 7.1780356 4.4159106 6.5551737 4.8830572 L 3.5726227 3.6852457 c -0.2635185 -0.1078031 -0.5869276 0 -0.730665 0.2635186 L 0.44633444 8.0931924 C 0.29061892 8.3567105 0.36248711 8.68012 0.59007182 8.8597913 L 3.1174543 10.812224 c -0.047912 0.407257 -0.083847 0.802534 -0.083847 1.197813 0 0.395276 0.035935 0.778576 0.083847 1.161876 l -2.52738248 1.988366 c -0.2275842 0.179673 -0.2994529 0.503081 -0.14373738 0.766599 l 2.39562336 4.144431 c 0.1437374 0.263517 0.4671464 0.359342 0.730665 0.263517 l 2.9825509 -1.209789 c 0.6228619 0.479125 1.2696804 0.88638 2.0243015 1.185833 l 0.4431906 3.174202 c 0.047912 0.287474 0.2994524 0.503079 0.5989059 0.503079 h 4.7912453 c 0.299452 0 0.550994 -0.215605 0.598906 -0.503079 l 0.443189 -3.174202 c 0.754623 -0.31143 1.40144 -0.706708 2.024302 -1.185833 l 2.982552 1.209789 c 0.263518 0.09583 0.586927 0 0.730664 -0.263517 l 2.395624 -4.144431 c 0.143737 -0.263518 0.08384 -0.586926 -0.143737 -0.766599 z"/>
+                                    </Button>
+                                </StackPanel>
+
+                                <ScrollViewer DockPanel.Dock="Top" HorizontalAlignment="Stretch"
+                                              HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                    <DockPanel>
+                                        <StackPanel DockPanel.Dock="Top" Margin="5,0,0,0">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="ItemsControl">
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                </Style>
+                                                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                                                    <Setter Property="Margin" Value="0,4,8,4" />
+                                                    <Setter Property="VerticalAlignment" Value="Top" />
+                                                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                                                </Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource PropertyItemButton}" />
+                                            </StackPanel.Resources>
+
+                                            <GridEx Margin="0,5,0,10"
+                                                    ColumnCount="2" StarColumns="1"
+                                                    RowCount="20" AutoLayoutColumns="2">
+                                                <Grid.Resources>
+                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+                                                </Grid.Resources>
+
+                                                <Label Name="PART_ElemPlayTime" Content="{DynamicResource LOCTimePlayed}" />
+                                                <TextBlock Name="PART_TextPlayTime" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemLastPlayed" Content="{DynamicResource LOCLastPlayed}" />
+                                                <TextBlock Name="PART_TextLastActivity" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemCompletionStatus" Content="{DynamicResource LOCCompletionStatus}" />
+                                                <TextBlock Name="PART_TextCompletionStatus" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemLibrary" Content="{DynamicResource LOCGameProviderTitle}" />
+                                                <Button Name="PART_ButtonLibrary" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemPlatform" Content="{DynamicResource LOCPlatformTitle}" />
+                                                <Button Name="PART_ButtonPlatform" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemGenres" Content="{DynamicResource LOCGenreLabel}" />
+                                                <ItemsControl Name="PART_ItemsGenres"  />
+
+                                                <Label Name="PART_ElemDevelopers" Content="{DynamicResource LOCDeveloperLabel}" />
+                                                <ItemsControl Name="PART_ItemsDevelopers" />
+
+                                                <Label Name="PART_ElemPublishers" Content="{DynamicResource LOCPublisherLabel}" />
+                                                <ItemsControl Name="PART_ItemsPublishers" />
+
+                                                <Label Name="PART_ElemReleaseDate" Content="{DynamicResource LOCGameReleaseDateTitle}" />
+                                                <Button Name="PART_ButtonReleaseDate" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemCategories" Content="{DynamicResource LOCGameCategoriesTitle}" />
+                                                <ItemsControl Name="PART_ItemsCategories" />
+
+                                                <Label Name="PART_ElemTags" Content="{DynamicResource LOCTagsLabel}" />
+                                                <ItemsControl Name="PART_ItemsTags" />
+
+                                                <Label Name="PART_ElemAgeRating" Content="{DynamicResource LOCAgeRatingLabel}" />
+                                                <Button Name="PART_ButtonAgeRating" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemSeries" Content="{DynamicResource LOCSeriesLabel}" />
+                                                <Button Name="PART_ButtonSeries" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemSource" Content="{DynamicResource LOCSourceLabel}" />
+                                                <Button Name="PART_ButtonSource" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemRegion" Content="{DynamicResource LOCRegionLabel}" />
+                                                <Button Name="PART_ButtonRegion" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemVersion" Content="{DynamicResource LOCVersionLabel}" />
+                                                <Button Name="PART_ButtonVersion" VerticalAlignment="Center" />
+
+                                                <Label Name="PART_ElemCommunityScore" Content="{DynamicResource LOCCommunityScore}" />
+                                                <TextBlock Name="PART_TextCommunityScore" VerticalAlignment="Center"
+                                                           Style="{DynamicResource TextBlockGameScore}" />
+
+                                                <Label Name="PART_ElemCriticScore" Content="{DynamicResource LOCCriticScore}" />
+                                                <TextBlock Name="PART_TextCriticScore" VerticalAlignment="Center"
+                                                           Style="{DynamicResource TextBlockGameScore}" />
+
+                                                <Label Name="PART_ElemUserScore" Content="{DynamicResource LOCUserScore}" />
+                                                <TextBlock Name="PART_TextUserScore" VerticalAlignment="Center"
+                                                           Style="{DynamicResource TextBlockGameScore}" />
+
+                                                <Label Name="PART_ElemLinks" Content="{DynamicResource LOCLinksLabel}" />
+                                                <ItemsControl Name="PART_ItemsLinks" />
+                                            </GridEx>
+                                        </StackPanel>
+
+                                        <HtmlTextView Name="PART_HtmlDescription" DockPanel.Dock="Top"
+                                                      Margin="5,5,0,5"
+                                                      HtmlFontSize="{DynamicResource FontSize}"
+                                                      HtmlFontFamily="{DynamicResource FontFamily}"
+                                                      HtmlForeground="{DynamicResource TextColor}"
+                                                      LinkForeground="{DynamicResource GlyphColor}"                                      
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                                    </DockPanel>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </DockPanel>
+                    </Border>                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
