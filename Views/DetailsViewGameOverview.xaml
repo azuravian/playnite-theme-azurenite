@@ -302,6 +302,10 @@
                                                 <Label Name="PART_ElemRegion" Content="{DynamicResource LOCRegionLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonRegion" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
                                             </GridEx>
+											<GridEx ColumnCount="2" AutoLayoutColumns="2" RowCount="20" Grid.Column="8" Margin="15,10,10,0" Height="150" HorizontalAlignment="Right" Visibility="{DynamicResource ShowGameActivity}">
+												<StackPanel Name="PART_GaButtonWithTitleAndDetails" />
+                                            </GridEx>
+											
 											
                                             <Grid.Style>
                                                 <Style TargetType="Grid">
@@ -321,7 +325,7 @@
 											
                                             <Grid.Style>
                                                 <Style>
-                                                    <Setter Property="Control.Visibility" Value="Visible" />
+                                                    <Setter Property="Control.Visibility" Value="{DynamicResource ShowHLTBData}" />
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
                                                             <Setter Property="Control.Visibility" Value="Collapsed" />
@@ -361,7 +365,9 @@
                                             </ItemsControl>
                                         </Grid>
 										<!--Links End-->
-										<Grid Tag="{Binding IsPlayAvailable}">
+										
+										<!--Future Install Functionality-->
+										<!-- <Grid Tag="{Binding IsPlayAvailable}">
 											<Grid.Style>
 												<Style TargetType="{x:Type Grid}">
 													<Setter Property="Visibility" Value="Visible" />
@@ -385,7 +391,8 @@
 												</Grid.Style>
 												<Button Name="btnpsinstall" Cursor="Hand" HorizontalAlignment="Left" Style="{DynamicResource ContextButton}" />												
 											</Grid>
-										</Grid>
+										</Grid> -->
+										<!--End Future Install Functionality-->
 										
 										<!--Bottom Grid (Description and Achievements)-->
 										<Grid>
@@ -433,7 +440,7 @@
 											<Expander Grid.Column="1" IsExpanded="True" Tag="{DynamicResource Sc_HasData}">
 												<Expander.Style>
 													<Style>														
-														<Setter Property="Control.Visibility" Value="Visible" />
+														<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievements}" />
 														<Style.Triggers>
 															<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
 																<Setter Property="Control.Visibility" Value="Collapsed" />
@@ -500,7 +507,7 @@
 															<StackPanel Grid.Column="5" Name="PART_Achievements_ListCompactLocked"  />
 														 </Grid>
 														</Grid>
-														<GridEx Grid.Column="8" Margin="8,0,8,10" Tag="{DynamicResource Sc_HasData}" 
+														<GridEx Grid.Column="8" Margin="8,0,8,0" Tag="{DynamicResource Sc_HasData}" 
 															Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}" >
 															<Border Background="{DynamicResource WindowBackgourndBrush}" Opacity="{DynamicResource DetailPanelOpacity}" CornerRadius="{DynamicResource ControlCornerRadius}" BorderThickness="2" BorderBrush="{DynamicResource NormalBorderBrush}"/>
 															<StackPanel Tag="{DynamicResource Sc_EnableIntegrationInCustomTheme}" 
@@ -523,7 +530,7 @@
 														</GridEx>
 														<StackPanel>
 															<StackPanel Name="PART_Achievements_ProgressBar" Height="30" Margin="9,12,9,0" />
-															<StackPanel Name="PART_Achievements_List" Height="400" Margin="8,0,8,8" />	
+															<StackPanel Name="PART_Achievements_List" Height="400" Margin="8,10,8,8" />	
 														</StackPanel>
 													</StackPanel>
 												</Border>

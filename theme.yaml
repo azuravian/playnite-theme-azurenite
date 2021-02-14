@@ -8,3 +8,7 @@ Links:
       Url: https://github.com/azuravian/playnite-theme-azurenite
     - Name: Forum
       Url: https://playnite.link/forum/thread-585.html
+Constants:
+    - ShowGameActivity: Set visibility for the Game Activity button.
+    - ShowHLTBData: Set visibility for How Long to Beat data.
+    - ShowAchievements: Set visibility for Achievements data.

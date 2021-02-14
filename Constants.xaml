@@ -34,6 +34,7 @@
     <sys:String x:Key="ExtraMetadataPath">C:\Users\azure\AppData\Roaming\Playnite</sys:String>
 	<sys:Double x:Key="DetailsViewLogoMaxWidth">500</sys:Double>
 	<sys:Double x:Key="DetailsViewLogoMaxHeight">200</sys:Double>
+	<!--End Extrametadata plugin-->
 
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="Transparent" />
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
@@ -67,6 +68,9 @@
     <SolidColorBrush x:Key="NegativeRatingBrush" Color="#ff6b6b" />
     <SolidColorBrush x:Key="MixedRatingBrush" Color="#fffca1" />
 	<SolidColorBrush x:Key="WindowBackgourndBrush" Color="#0420BEE5"/>
+	<Visibility x:Key="ShowGameActivity">Visible</Visibility>
+	<Visibility x:Key="ShowHLTBData">Visible</Visibility>
+	<Visibility x:Key="ShowAchievements">Visible</Visibility>
     
     <LinearGradientBrush x:Key="ContextBrush" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
         <GradientStop Color="#235dce" Offset="1"/>

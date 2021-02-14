@@ -26,7 +26,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridViewGameOverview}">
-                    <Border Padding="10,0,5,0" BorderBrush="{DynamicResource PanelSeparatorBrush}"  Background="#7F000000"
+                    <Border Padding="10,0,5,0" BorderBrush="{DynamicResource PanelSeparatorBrush}"  Background="#3F465591"
                             d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameDetailsIntance}">
                         <Border.Style>
                             <Style TargetType="Border">
@@ -73,13 +73,76 @@
                                         </Style.Triggers>
                                     </Style>
                                 </DockPanel.Style>
-
-                                <DockPanel DockPanel.Dock="Top">
-                                    <Image Name="PART_ImageIcon" DockPanel.Dock="Left" Height="Auto" Width="Auto"
-                                           RenderOptions.BitmapScalingMode="Fant" Margin="0,0,10,0" />
-                                </DockPanel>
-
-                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"
+								
+								<!--Extra Metadata Logo-->
+								<DockPanel DockPanel.Dock="Top">
+									<Grid Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10, 10, 10, 10" >
+										<TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed" VerticalAlignment="Bottom">
+											<TextBlock.Style>
+												<Style TargetType="TextBlock">
+													<Setter Property="Text">
+														<Setter.Value>
+															<MultiBinding StringFormat="{}{0}{1}{2}{3}">
+																<Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
+																<Binding Source="\ExtraMetadata\games\"/>
+																<Binding Path="Game.Id"/>
+																<Binding Source="\logo.png" />
+															</MultiBinding>
+														</Setter.Value>
+													</Setter>
+												</Style>
+											</TextBlock.Style>
+										</TextBlock>
+										<Image Name="LogoImage" Grid.ZIndex="1" MaxWidth="{DynamicResource DetailsViewLogoMaxWidth}" 
+											MaxHeight="{DynamicResource DetailsViewLogoMaxHeight}" 
+											Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" 
+											HorizontalAlignment="Center" VerticalAlignment="Bottom"
+											StretchDirection="DownOnly" Tag="{DynamicResource UseAbsoluteExtraMetadataPath}">
+											<Image.Style>
+												<Style TargetType="Image">
+													<Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text}"/>
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+															<Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text, Converter={StaticResource ImageStringToImageConverter}}"/>
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</Image.Style>
+										</Image>
+										<TextBlock Text="{Binding Game.DisplayName}" TextAlignment="Center" Margin="3,3,0,0"
+												TextWrapping="Wrap"  Foreground="{DynamicResource WindowBackgourndBrush}"
+												TextOptions.TextRenderingMode="Aliased" MaxWidth="320" FontSize="34" VerticalAlignment="Bottom">
+											<TextBlock.Style>
+												<Style TargetType="TextBlock">
+													<Setter Property="Visibility" Value="Collapsed" />
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding ElementName=LogoImage, Path=Source}" Value="{x:Null}">
+															<Setter Property="Visibility" Value="Visible" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</TextBlock.Style>
+										</TextBlock>
+										<TextBlock Text="{Binding Game.DisplayName}" TextAlignment="Center" 
+												TextWrapping="Wrap"  Foreground="{DynamicResource TextBrush}"
+												TextOptions.TextRenderingMode="Aliased" MaxWidth="320" FontSize="34" VerticalAlignment="Bottom">
+											<TextBlock.Style>
+												<Style TargetType="TextBlock">
+													<Setter Property="Visibility" Value="Collapsed" />
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding ElementName=LogoImage, Path=Source}" Value="{x:Null}">
+															<Setter Property="Visibility" Value="Visible" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</TextBlock.Style>
+										</TextBlock>
+									</Grid>
+								</DockPanel>
+								<!--End Extra Metadata Logo-->
+								
+								
+								<StackPanel DockPanel.Dock="Top" Orientation="Horizontal"
                                             Margin="0,10,0,10">
                                     <Button Name="PART_ButtonPlayAction" Cursor="Hand"
                                              Style="{DynamicResource PlayButton}" />
@@ -89,6 +152,50 @@
                                         <Path Style="{StaticResource VectorIcon}" Stretch="Fill" Width="17" Height="17" Data="m 12.017193 16.202377 a 4.1923406 4.1923406 0 0 1 -4.192339 -4.19234 4.1923406 4.1923406 0 0 1 4.192339 -4.1923414 4.1923406 4.1923406 0 0 1 4.192342 4.1923414 4.1923406 4.1923406 0 0 1 -4.192342 4.19234 m 8.89974 -3.030464 c 0.04791 -0.3833 0.08384 -0.7666 0.08384 -1.161876 0 -0.395279 -0.03594 -0.790556 -0.08384 -1.197813 L 23.444317 8.8597913 C 23.6719 8.68012 23.731791 8.3567105 23.588054 8.0931924 L 21.19243 3.9487643 C 21.048693 3.6852457 20.725284 3.5774426 20.461766 3.6852457 L 17.479214 4.8830572 C 16.856352 4.4159106 16.209535 4.0086547 15.454912 3.7092019 L 15.011723 0.53500108 C 14.963809 0.24752629 14.712269 0.0319202 14.412817 0.0319202 H 9.6215717 c -0.2994535 0 -0.5509933 0.21560609 -0.5989059 0.50308088 L 8.5794752 3.7092019 C 7.824854 4.0086547 7.1780356 4.4159106 6.5551737 4.8830572 L 3.5726227 3.6852457 c -0.2635185 -0.1078031 -0.5869276 0 -0.730665 0.2635186 L 0.44633444 8.0931924 C 0.29061892 8.3567105 0.36248711 8.68012 0.59007182 8.8597913 L 3.1174543 10.812224 c -0.047912 0.407257 -0.083847 0.802534 -0.083847 1.197813 0 0.395276 0.035935 0.778576 0.083847 1.161876 l -2.52738248 1.988366 c -0.2275842 0.179673 -0.2994529 0.503081 -0.14373738 0.766599 l 2.39562336 4.144431 c 0.1437374 0.263517 0.4671464 0.359342 0.730665 0.263517 l 2.9825509 -1.209789 c 0.6228619 0.479125 1.2696804 0.88638 2.0243015 1.185833 l 0.4431906 3.174202 c 0.047912 0.287474 0.2994524 0.503079 0.5989059 0.503079 h 4.7912453 c 0.299452 0 0.550994 -0.215605 0.598906 -0.503079 l 0.443189 -3.174202 c 0.754623 -0.31143 1.40144 -0.706708 2.024302 -1.185833 l 2.982552 1.209789 c 0.263518 0.09583 0.586927 0 0.730664 -0.263517 l 2.395624 -4.144431 c 0.143737 -0.263518 0.08384 -0.586926 -0.143737 -0.766599 z"/>
                                     </Button>
                                 </StackPanel>
+
+								<!--Success Story-->
+                                <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+                                    <StackPanel Background="{DynamicResource WindowBackgourndBrush}" Height="Auto">
+										<GridEx Grid.Column="8" Margin="8,0,8,10" Tag="{DynamicResource Sc_HasData}">
+											<GridEx.Style>
+												<Style>														
+													<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievements}" />
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
+															<Setter Property="Control.Visibility" Value="Collapsed" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+															<Setter Property="Control.Visibility" Value="Collapsed" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</GridEx.Style>
+											<StackPanel Tag="{DynamicResource Sc_EnableIntegrationInCustomTheme}" 
+													Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}" >
+												<DockPanel>
+													<StackPanel Margin="0,10,0,0" Grid.Column="0" Name="PART_ScButtonWithJustIcon"/>	
+													<Label Content=" ACHIEVEMENTS " Foreground="{DynamicResource TextBrush}"
+														FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+														VerticalAlignment="Center" HorizontalAlignment="Center" />
+													<Label Content="{DynamicResource Sc_Unlocked}" Foreground="{DynamicResource PositiveRatingBrush}"
+														FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+														VerticalAlignment="Center" HorizontalAlignment="Center"/>
+													<Label Content=" / " Foreground="{DynamicResource TextBrush}"
+														FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+														VerticalAlignment="Center" HorizontalAlignment="Center" />
+													<Label Content="{DynamicResource Sc_Total}" Foreground="{DynamicResource TextBrush}" 
+														FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+														VerticalAlignment="Center" HorizontalAlignment="Left"/>
+												</DockPanel>
+												
+												<StackPanel Name="PART_Achievements_ProgressBar" Height="30" Margin="9,12,9,0" />
+												<StackPanel Name="PART_Achievements_List" Height="240" Margin="8,0,8,8" />	
+											</StackPanel>
+										</GridEx>
+										
+									</StackPanel>
+                                </DockPanel>
+								<!--End Success Story-->
 
                                 <ScrollViewer DockPanel.Dock="Top" HorizontalAlignment="Stretch"
                                               HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -129,7 +236,18 @@
                                                 <Button Name="PART_ButtonPlatform" VerticalAlignment="Center" />
 
                                                 <Label Name="PART_ElemGenres" Content="{DynamicResource LOCGenreLabel}" />
-                                                <ItemsControl Name="PART_ItemsGenres"  />
+                                                <ItemsControl Name="PART_ItemsGenres">
+													<ItemsControl.ItemsPanel>
+														<ItemsPanelTemplate>
+															<WrapPanel Orientation="Horizontal"/>
+														</ItemsPanelTemplate>
+													</ItemsControl.ItemsPanel>
+													<ItemsControl.ItemContainerStyle>
+														<Style TargetType="ContentPresenter">
+															<Setter Property="FrameworkElement.Margin" Value="0,0,10,0"/>
+														</Style>
+													</ItemsControl.ItemContainerStyle>
+												</ItemsControl>
 
                                                 <Label Name="PART_ElemDevelopers" Content="{DynamicResource LOCDeveloperLabel}" />
                                                 <ItemsControl Name="PART_ItemsDevelopers" />
@@ -144,7 +262,18 @@
                                                 <ItemsControl Name="PART_ItemsCategories" />
 
                                                 <Label Name="PART_ElemTags" Content="{DynamicResource LOCTagsLabel}" />
-                                                <ItemsControl Name="PART_ItemsTags" />
+                                                <ItemsControl Name="PART_ItemsTags">
+													<ItemsControl.ItemsPanel>
+														<ItemsPanelTemplate>
+															<WrapPanel Orientation="Horizontal"/>
+														</ItemsPanelTemplate>
+													</ItemsControl.ItemsPanel>
+													<ItemsControl.ItemContainerStyle>
+														<Style TargetType="ContentPresenter">
+															<Setter Property="FrameworkElement.Margin" Value="0,0,10,0"/>
+														</Style>
+													</ItemsControl.ItemContainerStyle>
+												</ItemsControl>
 
                                                 <Label Name="PART_ElemAgeRating" Content="{DynamicResource LOCAgeRatingLabel}" />
                                                 <Button Name="PART_ButtonAgeRating" VerticalAlignment="Center" />
@@ -174,7 +303,19 @@
                                                            Style="{DynamicResource TextBlockGameScore}" />
 
                                                 <Label Name="PART_ElemLinks" Content="{DynamicResource LOCLinksLabel}" />
-                                                <ItemsControl Name="PART_ItemsLinks" />
+                                                <ItemsControl Name="PART_ItemsLinks">
+													<ItemsControl.ItemsPanel>
+														<ItemsPanelTemplate>
+															<WrapPanel Orientation="Horizontal"/>
+														</ItemsPanelTemplate>
+													</ItemsControl.ItemsPanel>
+													<ItemsControl.ItemContainerStyle>
+														<Style TargetType="ContentPresenter">
+															<Setter Property="FrameworkElement.Margin" Value="0,0,10,0"/>
+														</Style>
+													</ItemsControl.ItemContainerStyle>
+												</ItemsControl>
+												
                                             </GridEx>
                                         </StackPanel>
 
