@@ -72,6 +72,7 @@
 	<Visibility x:Key="ShowHLTBData">Visible</Visibility>
 	<Visibility x:Key="ShowAchievements">Visible</Visibility>
 	<Visibility x:Key="ShowAchievementsTop">Visible</Visibility>
+	<HorizontalAlignment x:Key="LogoHorizontalAlignment">Left</HorizontalAlignment>
     
     <LinearGradientBrush x:Key="ContextBrush" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
         <GradientStop Color="#235dce" Offset="1"/>
