@@ -43,7 +43,7 @@
                                     </RadialGradientBrush>
                                 </FadeImage.ImageOpacityMask>
                             </FadeImage>
-							<Grid Grid.Row="0" Height="395" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 10, 10" >
+							<Grid Grid.Row="0" Height="395" HorizontalAlignment="{DynamicResource LogoHorizontalAlignment}" VerticalAlignment="Top" Margin="10, 10, 10, 10" >
 								<TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed" VerticalAlignment="Bottom">
 									<TextBlock.Style>
 										<Style TargetType="TextBlock">
