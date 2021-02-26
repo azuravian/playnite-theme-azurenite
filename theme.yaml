@@ -1,18 +1,34 @@
-ThemeApiVersion: 1.9.0
+﻿ThemeApiVersion: 1.9.0
 Id: AzureNite-0516548
 Name: AzureNite
 Author: Azuravian
-Version: 1.3
+Version: 1.5.1
 Links:
     - Name: Github
       Url: https://github.com/azuravian/playnite-theme-azurenite
     - Name: Forum
       Url: https://playnite.link/forum/thread-585.html
 Constants:
-    - LogoHorizontalAlignment: Set horizontal alignment of logo.
-    - ShowGameActivity: Set visibility for the Game Activity button.
+    - ShowGradient: Show Gradient.
+    - SelectScreenshotView: Screenshot - True for list, False for 1x image.
     - ShowHLTBData: Set visibility for How Long to Beat data.
-    - ShowAchievements: Set visibility for Achievements data.
-    - ShowAchievementsTop: Set visibility for Achievements section in top row.
+    - ------------:
+    - Logo:
     - MaxLogoWidth(100,500): Set width of logo.
     - MaxLogoHeight(100,250): Set height of logo.
+    - LogoHorizontalAlignment: Set horizontal alignment of logo.
+    - LogoVerticalAlignment: Set vertical alignment of logo.
+    - ------------:
+    - Game Activity:
+    - ShowGameActivityTop: Set visibility for the Game Activity chart.
+    - SelectGameActivity: Game Activity - True for Time session, False for log.
+    - ------------:
+    - Achievements:
+    - ShowAchievements: Set visibility for Achievements data.
+    - ShowAchievementsProgress: Set visibility for Achievements Progress Bar.
+    - ShowAchievementsUnlocked: Set visibility for Unlocked Achievements.
+    - ShowAchievementsLocked: Set visibility for Locked Achievements.
+    - ShowAchievementsTimeline: Set visibility for Achievements Timeline.
+    - ShowAchievementsList: Set visibility for Achievements List.
+    - ShowAchievementsTop: Set visibility for Achievements section in top row.
+    
