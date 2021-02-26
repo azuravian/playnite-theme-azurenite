@@ -63,7 +63,7 @@
 								<Image Name="LogoImage" Grid.ZIndex="1" MaxWidth="{DynamicResource MaxLogoWidth}" 
 									MaxHeight="{DynamicResource MaxLogoHeight}" 
 									Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" 
-									HorizontalAlignment="Center" VerticalAlignment="Bottom"
+									HorizontalAlignment="Center" VerticalAlignment="{DynamicResource LogoVerticalAlignment}"
 									StretchDirection="DownOnly" Tag="{DynamicResource UseAbsoluteExtraMetadataPath}">
 									<Image.Style>
 										<Style TargetType="Image">
@@ -149,9 +149,22 @@
 									
 									
                                     <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+										
 										<!--Gradient-->
-                                        
-										<DockPanel Height="70" LastChildFill="False" Margin="-27,8,-27,-86" RenderTransformOrigin="0.5,0.5">
+                                        <DockPanel Height="70" LastChildFill="False" Margin="-27,8,-27,-86" RenderTransformOrigin="0.5,0.5" Tag="{DynamicResource ShowGradient}">
+											<DockPanel.Style>
+												<Style>
+													<Setter Property="Control.Visibility" Value="Visible" />
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+															<Setter Property="Control.Visibility" Value="Visible" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+															<Setter Property="Control.Visibility" Value="Collapsed" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</DockPanel.Style>
                                             <DockPanel.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
@@ -170,6 +183,30 @@
                                             </DockPanel.Background>
                                         </DockPanel>
 										<!--Gradient End-->
+										<DockPanel Height="70" LastChildFill="False" Margin="-27,8,-27,-86" RenderTransformOrigin="0.5,0.5" Background="#FF262B33" Tag="{DynamicResource ShowGradient}">
+											<DockPanel.Style>
+												<Style>
+													<Setter Property="Control.Visibility" Value="Collapsed" />
+													<Style.Triggers>
+														<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+															<Setter Property="Control.Visibility" Value="Collapsed" />
+														</DataTrigger>
+														<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+															<Setter Property="Control.Visibility" Value="Visible" />
+														</DataTrigger>
+													</Style.Triggers>
+												</Style>
+											</DockPanel.Style>
+                                            <DockPanel.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform/>
+                                                    <TranslateTransform Y="-25"/>
+                                                </TransformGroup>
+                                            </DockPanel.RenderTransform>
+                                        </DockPanel>
+										
 										
 										<!--Play Row-->
                                         <Grid Margin="0,-18,0,7">
@@ -458,6 +495,12 @@
 
                                                 <Label Name="PART_ElemVersion" Content="{DynamicResource LOCVersionLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonVersion" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3"/>
+												
+												<Label Name="PART_ElemSource" Content="{DynamicResource LOCSourceLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Button Padding="0" Background="Transparent" Name="PART_ButtonSource" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#d3d3d3" Height="30"/>
+
+                                                <Label Name="PART_ElemRegion" Content="{DynamicResource LOCRegionLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Button Padding="0" Background="Transparent" Name="PART_ButtonRegion" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
                                             </GridEx>
                                             <GridEx ColumnCount="2" Grid.Column="4" AutoLayoutColumns="2" RowCount="50" Margin="15,0,0,0" Height="150">
                                                 <Label Name="PART_ElemTags" Content="{DynamicResource LOCTagsLabel}" Margin="0,0,30,0" VerticalAlignment="Top" Foreground="#626164" Height="30"/>
@@ -477,16 +520,52 @@
                                                     <ItemsControl Padding="0,3,0,0" Name="PART_ItemsFeatures" VerticalAlignment="Top" Margin="0,0,0,0"/>
                                                 </ScrollViewer>
                                             </GridEx>
-                                            <GridEx ColumnCount="2" AutoLayoutColumns="2" RowCount="20" Grid.Column="7" Margin="15,0,0,0" Height="150">
-                                                <Label Name="PART_ElemSource" Content="{DynamicResource LOCSourceLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
-                                                <Button Padding="0" Background="Transparent" Name="PART_ButtonSource" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#d3d3d3" Height="30"/>
-
-                                                <Label Name="PART_ElemRegion" Content="{DynamicResource LOCRegionLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
-                                                <Button Padding="0" Background="Transparent" Name="PART_ButtonRegion" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
-                                            </GridEx>
-											<GridEx ColumnCount="2" AutoLayoutColumns="2" RowCount="20" Grid.Column="8" Margin="15,10,10,0" Height="150" HorizontalAlignment="Right" Visibility="{DynamicResource ShowGameActivity}">
-												<StackPanel Name="PART_GaButtonWithTitleAndDetails" />
-                                            </GridEx>
+											
+											<!--Game Activity Panel-->
+											<StackPanel Tag="{DynamicResource Ga_HasData}" Grid.Column="8" Margin="15,0,10,0" Height="150" HorizontalAlignment="Right">
+												<StackPanel.Style>
+													<Style>
+														<Setter Property="Control.Visibility" Value="{DynamicResource ShowGameActivityTop}"/>
+														<Style.Triggers>
+															<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																<Setter Property="Control.Visibility" Value="Collapsed" />
+															</DataTrigger>
+														</Style.Triggers>
+													</Style>
+												</StackPanel.Style>
+												<Label Content="Game Activity" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+												<StackPanel Name="PART_GameActivity_Graphic" Height="120" Width="500" Tag="{DynamicResource SelectGameActivity}">
+													<StackPanel.Style>
+														<Style>
+															<Setter Property="Control.Visibility" Value="Visible"/>
+															<Style.Triggers>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+																	<Setter Property="Control.Visibility" Value="Visible" />
+																</DataTrigger>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																	<Setter Property="Control.Visibility" Value="Collapsed" />
+																</DataTrigger>
+															</Style.Triggers>
+														</Style>
+													</StackPanel.Style>
+												</StackPanel>
+												<StackPanel Name="PART_GameActivity_GraphicLog" Height="120" Width="500" Tag="{DynamicResource SelectGameActivity}">
+													<StackPanel.Style>
+														<Style>
+															<Setter Property="Control.Visibility" Value="Collapsed"/>
+															<Style.Triggers>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																	<Setter Property="Control.Visibility" Value="Visible" />
+																</DataTrigger>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+																	<Setter Property="Control.Visibility" Value="Collapsed" />
+																</DataTrigger>
+															</Style.Triggers>
+														</Style>
+													</StackPanel.Style>
+												</StackPanel>
+                                            </StackPanel>
+											<!--End Game Activity Panel-->
 											
 											
                                             <Grid.Style>
@@ -619,106 +698,180 @@
 											<!--Description End-->
 										
 											<!--Success Story-->
-											<Expander Grid.Column="1" IsExpanded="True" Tag="{DynamicResource Sc_HasData}">
-												<Expander.Style>
-													<Style>														
-														<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievements}" />
-														<Style.Triggers>
-															<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
-																<Setter Property="Control.Visibility" Value="Collapsed" />
-															</DataTrigger>
-															<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-																<Setter Property="Control.Visibility" Value="Collapsed" />
-															</DataTrigger>
-														</Style.Triggers>
-													</Style>
-												</Expander.Style>
-												<Expander.Header>																
-													<DockPanel>
-														<Label Content="" FontFamily="{StaticResource FontIcoFont}" FontSize="24" Margin="4,2,8,0"
-																VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource GlyphBrush}"/>
-														<Label Content="ACHIEVEMENTS " Foreground="{DynamicResource TextBrush}"
-															FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
-															VerticalAlignment="Center" HorizontalAlignment="Center" />
-														<Label Content="{DynamicResource Sc_Unlocked}" Foreground="{DynamicResource PositiveRatingBrush}"
-															FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
-															VerticalAlignment="Center" HorizontalAlignment="Center"/>
-														<Label Content=" / " Foreground="{DynamicResource TextBrush}"
-															FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
-															VerticalAlignment="Center" HorizontalAlignment="Center" />
-														<Label Content="{DynamicResource Sc_Total}" Foreground="{DynamicResource TextBrush}" 
-															FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
-															VerticalAlignment="Center" HorizontalAlignment="Center"/>
-													</DockPanel>
-												</Expander.Header>
-											
-												<Border Background="{DynamicResource WindowBackgourndBrush}" Opacity="{DynamicResource DetailPanelOpacity}" BorderThickness="0" CornerRadius="15" Margin="0,10,0,0">
-													<StackPanel Background="{DynamicResource WindowBackgourndBrush}" Height="Auto">
-														<Grid Margin="8,8,8,8" Tag="{DynamicResource Sc_HasData}" 
-															Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}">
-
-														 <Grid Margin="0,0,0,0" Tag="{DynamicResource Sc_EnableIntegrationInCustomTheme}" 
-															Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}">
-														
-														
-															<Grid.ColumnDefinitions>
-																<ColumnDefinition Width="Auto"/>
-																<ColumnDefinition Width="Auto"/>
-																<ColumnDefinition Width="Auto"/>
-																<ColumnDefinition Width="*" />
-																<ColumnDefinition Width="Auto"/>
-																<ColumnDefinition Width="*" />
-															</Grid.ColumnDefinitions>												
-															
-															<StackPanel Margin="0,10,0,0" Grid.Column="0" Name="PART_ScButtonWithJustIcon"/>
-															
-															<Label Grid.Column="2" Content="" FontFamily="{StaticResource FontIcoFont}" FontSize="21" Margin="16,0,4,0"
-																VerticalAlignment="Center" HorizontalAlignment="Center" 
-																ToolTip="UnLocked" Foreground="{StaticResource PositiveRatingBrush}"
-																Tag="{DynamicResource Sc_IntegrationShowAchievementsCompactUnlocked}" 
-																Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}"
-															/>
-															<StackPanel Grid.Column="3" Name="PART_Achievements_ListCompactUnlocked" />
-															
-															<Label Grid.Column="4" Content="" FontFamily="{StaticResource FontIcoFont}" FontSize="21" Margin="16,0,4,0"
-																VerticalAlignment="Center" HorizontalAlignment="Center" 
-																ToolTip="Locked" Foreground="{DynamicResource NegativeRatingBrush}"
-																Tag="{DynamicResource Sc_IntegrationShowAchievementsCompactLocked}" 
-																Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}"
-															/>
-															<StackPanel Grid.Column="5" Name="PART_Achievements_ListCompactLocked"  />
-														 </Grid>
-														</Grid>
-														<GridEx Grid.Column="8" Margin="8,0,8,0" Tag="{DynamicResource Sc_HasData}" 
-															Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}" >
-															<Border Background="{DynamicResource WindowBackgourndBrush}" Opacity="{DynamicResource DetailPanelOpacity}" CornerRadius="{DynamicResource ControlCornerRadius}" BorderThickness="2" BorderBrush="{DynamicResource NormalBorderBrush}"/>
-															<StackPanel Tag="{DynamicResource Sc_EnableIntegrationInCustomTheme}" 
-																	Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}" >
-																<Grid Margin="8,10,0,0" Tag="{DynamicResource Sc_IntegrationShowGraphic}" 
-																		Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}" >
-																	<Grid.ColumnDefinitions>
-																		<ColumnDefinition Width="60"/>
-																		<ColumnDefinition Width="*" />
-																	</Grid.ColumnDefinitions>
-																
-																	<Label Grid.Column="0" Content="" FontFamily="{StaticResource FontIcoFont}" FontSize="21" Margin="0,4,0,0"
+											<Grid Grid.Column="1">
+												<Grid.RowDefinitions>
+													<RowDefinition Height="Auto"/>
+													<RowDefinition Height="Auto"/>
+												</Grid.RowDefinitions>
+												<Expander IsExpanded="True" Tag="{DynamicResource Sc_HasData}">
+													<Expander.Style>
+														<Style>														
+															<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievements}" />
+															<Style.Triggers>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
+																	<Setter Property="Control.Visibility" Value="Collapsed" />
+																</DataTrigger>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																	<Setter Property="Control.Visibility" Value="Collapsed" />
+																</DataTrigger>
+															</Style.Triggers>
+														</Style>
+													</Expander.Style>
+													<Expander.Header>																
+														<DockPanel>
+															<Button Name="PART_ScCustomButton" Cursor="Hand">
+																<Label Content="🏆" FontFamily="{StaticResource FontIcoFont}" FontSize="18" Margin="0,2,8,0"
 																		VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource GlyphBrush}"/>
-																	<TextBlock Grid.Column="1" VerticalAlignment="Center" Text="timeline" 
-																		Typography.Capitals="AllSmallCaps"
-																		Style="{DynamicResource BaseTextBlockStyle}" FontSize="{DynamicResource FontSizeLargest}"/>
-																</Grid>
-																<StackPanel Name="PART_Achievements_Graphics" MaxHeight="300" MinWidth="300" Margin="8,15,12,12" />
+															</Button>
+															<Label Content="ACHIEVEMENTS " Foreground="{DynamicResource TextBrush}"
+																FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+																VerticalAlignment="Center" HorizontalAlignment="Center" />
+															<Label Content="{DynamicResource Sc_Unlocked}" Foreground="{DynamicResource PositiveRatingBrush}"
+																FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+																VerticalAlignment="Center" HorizontalAlignment="Center"/>
+															<Label Content=" / " Foreground="{DynamicResource TextBrush}"
+																FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+																VerticalAlignment="Center" HorizontalAlignment="Center" />
+															<Label Content="{DynamicResource Sc_Total}" Foreground="{DynamicResource TextBrush}" 
+																FontFamily="Corbel" Typography.Capitals="AllSmallCaps" FontSize="24"
+																VerticalAlignment="Center" HorizontalAlignment="Center"/>
+														</DockPanel>
+													</Expander.Header>
+												
+													<Border Background="{DynamicResource WindowBackgourndBrush}" Opacity="{DynamicResource DetailPanelOpacity}" BorderThickness="0" CornerRadius="15" Margin="0,10,0,0">
+														<StackPanel Background="{DynamicResource WindowBackgourndBrush}" Height="Auto">
+															<StackPanel Name="PART_Achievements_ProgressBar" Height="30" Margin="0,10,8,0">
+																<StackPanel.Style>
+																	<Style>
+																		<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievementsProgress}"/>
+																	</Style>
+																</StackPanel.Style>
 															</StackPanel>
-														</GridEx>
-														<StackPanel>
-															<StackPanel Name="PART_Achievements_ProgressBar" Height="30" Margin="9,12,9,0" />
-															<StackPanel Name="PART_Achievements_List" Height="400" Margin="8,10,8,8" />	
-														</StackPanel>
-													</StackPanel>
-												</Border>
-											</Expander>
-											<!--Success Story End-->
+															
+															<UniformGrid Rows="1" Margin="8,5,8,8">
 
+																<!--Unlocked Achievements-->
+																<GridEx Margin="8,0,0,0">
+																	<GridEx.Style>
+																		<Style>
+																			<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievementsUnlocked}"/>
+																		</Style>
+																	</GridEx.Style>
+																	<Grid Margin="0,10,0,0" Tag="{DynamicResource Sc_IntegrationShowGraphic}" Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}">
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="20"/>
+																			<ColumnDefinition Width="*"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" Content="" FontFamily="{StaticResource FontIcoFont}" FontSize="21" Margin="0,4,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource PositiveRatingBrush}"
+																			ToolTip="Unlocked" />
+																		<StackPanel Grid.Column="1" Name="PART_Achievements_ListCompactUnlocked" Margin="10,0,8,0"/>
+																	</Grid>
+																</GridEx>
+																
+																<!--Locked Achievements-->
+																<GridEx Margin="8,0,8,0">
+																	<GridEx.Style>
+																		<Style>
+																			<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievementsLocked}"/>
+																		</Style>
+																	</GridEx.Style>
+																	<Grid Margin="0,10,0,0" Tag="{DynamicResource Sc_IntegrationShowGraphic}" Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource BooleanToVisibilityConverter}}">
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="20"/>
+																			<ColumnDefinition Width="*"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" Content="" FontFamily="{StaticResource FontIcoFont}" FontSize="21" Margin="0,4,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource NegativeRatingBrush}"
+																			ToolTip="Locked" />
+																		<StackPanel Grid.Column="1" Name="PART_Achievements_ListCompactLocked" Margin="10,0,-8,0"/>
+																	</Grid>
+																</GridEx>
+															</UniformGrid>
+															<UniformGrid Rows="1" Margin="0,5,0,0">
+															
+																<!--Achievement Timeline-->
+																<GridEx Margin="8,0,8,0" Tag="{DynamicResource Sc_HasData}">
+																	<GridEx.Style>
+																		<Style>
+																			<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievementsTimeline}"/>
+																			<Style.Triggers>
+																				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
+																					<Setter Property="Control.Visibility" Value="Collapsed" />
+																				</DataTrigger>
+																				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																					<Setter Property="Control.Visibility" Value="Collapsed" />
+																				</DataTrigger>
+																			</Style.Triggers>
+																		</Style>
+																	</GridEx.Style>
+																	<Border Background="{DynamicResource WindowBackgourndBrush}" Opacity="{DynamicResource DetailPanelOpacity}" CornerRadius="{DynamicResource ControlCornerRadius}" BorderThickness="2" BorderBrush="{DynamicResource NormalBorderBrush}"/>
+																	<StackPanel>
+																		<Grid Margin="8,10,0,0">
+																			<Grid.ColumnDefinitions>
+																				<ColumnDefinition Width="60"/>
+																				<ColumnDefinition Width="*"/>
+																			</Grid.ColumnDefinitions>
+
+																			<Label Grid.Column="0" Content="" FontFamily="{StaticResource FontIcoFont}" FontSize="21" Margin="0,4,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource GlyphBrush}"/>
+																			<TextBlock Grid.Column="1" VerticalAlignment="Center" Text="timeline" Typography.Capitals="AllSmallCaps" Style="{DynamicResource BaseTextBlockStyle}" FontSize="{DynamicResource FontSizeLargest}"/>
+																		</Grid>
+																		<StackPanel Name="PART_Achievements_Graphics" MaxHeight="300" MinWidth="300" Margin="8,15,12,12"/>
+																	 </StackPanel>
+																</GridEx>
+																
+																<!--Achievement List-->
+																<GridEx Margin="8,0,8,0" Tag="{DynamicResource Sc_HasData}">
+																	<GridEx.Style>
+																		<Style>
+																			<Setter Property="Control.Visibility" Value="{DynamicResource ShowAchievementsList}"/>
+																			<Style.Triggers>
+																				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
+																					<Setter Property="Control.Visibility" Value="Collapsed" />
+																				</DataTrigger>
+																				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																					<Setter Property="Control.Visibility" Value="Collapsed" />
+																				</DataTrigger>
+																			</Style.Triggers>
+																		</Style>
+																	</GridEx.Style>
+																	<Border Background="{DynamicResource WindowBackgourndBrush}" Opacity="{DynamicResource DetailPanelOpacity}" CornerRadius="{DynamicResource ControlCornerRadius}" BorderThickness="1" BorderBrush="{DynamicResource NormalBorderBrush}"/>
+																	<StackPanel Name="PART_Achievements_List" Height="250" MinWidth="300" Margin="0,0,0,0"/> 
+																</GridEx>
+															</UniformGrid>
+														</StackPanel>
+													</Border>
+												</Expander>
+												<StackPanel Grid.Row="1" Name="PART_SsvListScreenshots" Tag="{DynamicResource SelectScreenshotView}" Margin="10,10,10,10">
+													<StackPanel.Style>
+														<Style>
+															<Setter Property="Control.Visibility" Value="Visible"/>
+															<Style.Triggers>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+																	<Setter Property="Control.Visibility" Value="Visible" />
+																</DataTrigger>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																	<Setter Property="Control.Visibility" Value="Collapsed" />
+																</DataTrigger>
+															</Style.Triggers>
+														</Style>
+													</StackPanel.Style>
+												</StackPanel>
+												<StackPanel Grid.Row="1" Name="PART_SsvSinglePicture" Tag="{DynamicResource SelectScreenshotView}" Margin="10,10,10,10">
+													<StackPanel.Style>
+														<Style>
+															<Setter Property="Control.Visibility" Value="Collapsed"/>
+															<Style.Triggers>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																	<Setter Property="Control.Visibility" Value="Visible" />
+																</DataTrigger>
+																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+																	<Setter Property="Control.Visibility" Value="Collapsed" />
+																</DataTrigger>
+															</Style.Triggers>
+														</Style>
+													</StackPanel.Style>
+												</StackPanel>
+											</Grid>
+											<!--Success Story End-->
 										</Grid>
                                     </StackPanel>
                                 </DockPanel>
