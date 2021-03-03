@@ -2,7 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:Double x:Key="FontSizeSmall">12</sys:Double>
+    <!--Edit for Logo Font-->
+	<FontFamily x:Key="LogoFont">Copperplate Gothic</FontFamily>
+	<sys:Double x:Key="LogoSize">34</sys:Double>
+	
+	<sys:Double x:Key="FontSizeSmall">12</sys:Double>
     <sys:Double x:Key="FontSize">14</sys:Double>
     <sys:Double x:Key="FontSizeLarge">15</sys:Double>
     <sys:Double x:Key="FontSizeLarger">20</sys:Double>
@@ -28,6 +32,7 @@
     <Color x:Key="BackgroundToneColor">#2C3A67</Color>
     <Color x:Key="GridItemBackgroundColor">#151e3d</Color>
     <Color x:Key="PanelSeparatorColor">#662C3A67</Color>
+	
 	
 	<!-- darklinkpower ExtraMetadata plugin -->
     <sys:Boolean x:Key="UseAbsoluteExtraMetadataPath">true</sys:Boolean>
@@ -82,7 +87,7 @@
 	<sys:Boolean x:Key="SelectScreenshotView">True</sys:Boolean>
 	<HorizontalAlignment x:Key="LogoHorizontalAlignment">Left</HorizontalAlignment>
 	<VerticalAlignment x:Key="LogoVerticalAlignment">Bottom</VerticalAlignment>
-    
+	
     <LinearGradientBrush x:Key="ContextBrush" EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
         <GradientStop Color="#235dce" Offset="1"/>
         <GradientStop Color="#3a9cee" Offset="0"/>

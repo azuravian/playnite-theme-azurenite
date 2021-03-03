@@ -2,7 +2,7 @@
 Id: AzureNite-0516548
 Name: AzureNite
 Author: Azuravian
-Version: 1.5.1
+Version: 1.6
 Links:
     - Name: Github
       Url: https://github.com/azuravian/playnite-theme-azurenite
@@ -18,6 +18,7 @@ Constants:
     - MaxLogoHeight(100,250): Set height of logo.
     - LogoHorizontalAlignment: Set horizontal alignment of logo.
     - LogoVerticalAlignment: Set vertical alignment of logo.
+    - LogoSize(24,90): Set size of font if not using logos.
     - ------------:
     - Game Activity:
     - ShowGameActivityTop: Set visibility for the Game Activity chart.
