@@ -77,8 +77,8 @@
 									</Image.Style>
 								</Image>
 								<TextBlock Text="{Binding Game.DisplayName}" TextAlignment="Center" Margin="3,3,0,0"
-										TextWrapping="Wrap"  Foreground="{DynamicResource WindowBackgourndBrush}"
-										TextOptions.TextRenderingMode="Aliased" MaxWidth="320" FontSize="34" VerticalAlignment="Bottom">
+										TextWrapping="Wrap"  Foreground="{DynamicResource WindowBackgourndBrush}" FontFamily="{DynamicResource LogoFont}"
+										TextOptions.TextRenderingMode="Aliased" MaxWidth="320" FontSize="{DynamicResource LogoSize}" VerticalAlignment="{DynamicResource LogoVerticalAlignment}">
 									<TextBlock.Style>
 										<Style TargetType="TextBlock">
 											<Setter Property="Visibility" Value="Collapsed" />
@@ -91,8 +91,8 @@
 									</TextBlock.Style>
 								</TextBlock>
 								<TextBlock Text="{Binding Game.DisplayName}" TextAlignment="Center" 
-										TextWrapping="Wrap"  Foreground="{DynamicResource TextBrush}"
-										TextOptions.TextRenderingMode="Aliased" MaxWidth="320" FontSize="34" VerticalAlignment="Bottom">
+										TextWrapping="Wrap"  Foreground="{DynamicResource TextBrush}" FontFamily="{DynamicResource LogoFont}"
+										TextOptions.TextRenderingMode="Aliased" MaxWidth="320" FontSize="{DynamicResource LogoSize}" VerticalAlignment="{DynamicResource LogoVerticalAlignment}">
 									<TextBlock.Style>
 										<Style TargetType="TextBlock">
 											<Setter Property="Visibility" Value="Collapsed" />
@@ -672,7 +672,7 @@
 												<Expander.Header>																
 													<StackPanel Orientation="Horizontal">
 														<Image Name="PART_ImageIcon" Height="24" Width="24" SnapsToDevicePixels="True"
-                                                               Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Margin="10,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                StretchDirection="DownOnly" RenderOptions.BitmapScalingMode="Fant"/>
 														
 														<Label Content=" ~ "
@@ -840,36 +840,54 @@
 														</StackPanel>
 													</Border>
 												</Expander>
-												<StackPanel Grid.Row="1" Name="PART_SsvListScreenshots" Tag="{DynamicResource SelectScreenshotView}" Margin="10,10,10,10">
-													<StackPanel.Style>
-														<Style>
-															<Setter Property="Control.Visibility" Value="Visible"/>
-															<Style.Triggers>
-																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-																	<Setter Property="Control.Visibility" Value="Visible" />
-																</DataTrigger>
-																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-																	<Setter Property="Control.Visibility" Value="Collapsed" />
-																</DataTrigger>
-															</Style.Triggers>
-														</Style>
-													</StackPanel.Style>
-												</StackPanel>
-												<StackPanel Grid.Row="1" Name="PART_SsvSinglePicture" Tag="{DynamicResource SelectScreenshotView}" Margin="10,10,10,10">
-													<StackPanel.Style>
-														<Style>
-															<Setter Property="Control.Visibility" Value="Collapsed"/>
-															<Style.Triggers>
-																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
-																	<Setter Property="Control.Visibility" Value="Visible" />
-																</DataTrigger>
-																<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-																	<Setter Property="Control.Visibility" Value="Collapsed" />
-																</DataTrigger>
-															</Style.Triggers>
-														</Style>
-													</StackPanel.Style>
-												</StackPanel>
+												
+												<!--Screenshots Viewer-->
+												<Grid Grid.Row="1" Tag="{DynamicResource Ssv_HasData}">
+													<Grid.Style>
+														    <Style>
+																<Setter Property="Control.Visibility" Value="Visible" />
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Null}">
+																		<Setter Property="Control.Visibility" Value="Collapsed" />
+																	</DataTrigger>
+																	<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																		<Setter Property="Control.Visibility" Value="Collapsed" />
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+													</Grid.Style>
+													<StackPanel Name="PART_SsvListScreenshots" Tag="{DynamicResource SelectScreenshotView}" Margin="10,10,10,10">
+														<StackPanel.Style>
+															<Style>
+																<Setter Property="Control.Visibility" Value="Visible"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+																		<Setter Property="Control.Visibility" Value="Visible" />
+																	</DataTrigger>
+																	<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																		<Setter Property="Control.Visibility" Value="Collapsed" />
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</StackPanel.Style>
+													</StackPanel>
+													<StackPanel Name="PART_SsvSinglePicture" Tag="{DynamicResource SelectScreenshotView}" Margin="10,10,10,10">
+														<StackPanel.Style>
+															<Style>
+																<Setter Property="Control.Visibility" Value="Collapsed"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="False">
+																		<Setter Property="Control.Visibility" Value="Visible" />
+																	</DataTrigger>
+																	<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+																		<Setter Property="Control.Visibility" Value="Collapsed" />
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</StackPanel.Style>
+													</StackPanel>
+												</Grid>
+												<!--End Screenshots Viewer-->
 											</Grid>
 											<!--Success Story End-->
 										</Grid>
