@@ -126,6 +126,11 @@
                                     <Label Name="PART_ElemGenreLabel" Content="{StaticResource LOCGenreLabel}" Foreground="#02a2f7"
                                        Style="{StaticResource FilterLabel}"/>
                                     <FilterSelectionBox x:Name="PART_FilterGenre"/>
+									
+									<!--Features-->
+                                    <Label Name="PART_ElemFeatureLabel" Content="{StaticResource LOCFeatureLabel}" Foreground="#02a2f7"
+                                       Style="{StaticResource FilterLabel}"/>
+                                    <FilterSelectionBox x:Name="PART_FilterFeature"/>
 
                                         <!--ReleaseYear-->
                                     <Label Name="PART_ElemReleaseYearLabel" Content="{StaticResource LOCGameReleaseYearTitle}" Foreground="#02a2f7"

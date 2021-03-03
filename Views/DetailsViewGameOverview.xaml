@@ -43,6 +43,8 @@
                                     </RadialGradientBrush>
                                 </FadeImage.ImageOpacityMask>
                             </FadeImage>
+							
+							<!--Logo-->
 							<Grid Grid.Row="0" Height="395" HorizontalAlignment="{DynamicResource LogoHorizontalAlignment}" VerticalAlignment="Top" Margin="10, 10, 10, 10" >
 								<TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed" VerticalAlignment="Bottom">
 									<TextBlock.Style>
@@ -61,7 +63,7 @@
 									</TextBlock.Style>
 								</TextBlock>
 								<Image Name="LogoImage" Grid.ZIndex="1" MaxWidth="{DynamicResource MaxLogoWidth}" 
-									MaxHeight="{DynamicResource MaxLogoHeight}" 
+									MaxHeight="{DynamicResource MaxLogoHeight}"
 									Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" 
 									HorizontalAlignment="Center" VerticalAlignment="{DynamicResource LogoVerticalAlignment}"
 									StretchDirection="DownOnly" Tag="{DynamicResource UseAbsoluteExtraMetadataPath}">
@@ -105,6 +107,8 @@
 									</TextBlock.Style>
 								</TextBlock>
 							</Grid>
+							<!--End Logo-->
+							
                             <Grid HorizontalAlignment="Stretch" Margin="10,0,20,0" Grid.RowSpan="3" Height="Auto">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="320"/>
@@ -125,7 +129,7 @@
                                                 <TranslateTransform Y="55"/>
                                             </TransformGroup>
                                         </StackPanel.RenderTransform>
-                                        <ToggleButton Style="{DynamicResource ButtonMore}"  x:Name="DetailsButton" Focusable="False" FontSize="18" Width="35" Height="35" Margin="0,450,10,0" Padding="0" Cursor="Hand">
+                                        <ToggleButton Style="{DynamicResource ButtonMore}" x:Name="DetailsButton" Focusable="False" FontSize="18" Width="35" Height="35" Margin="0,450,10,0" Padding="0" Cursor="Hand" ToolTipService.ToolTip="Click to Toggle Info">
                                             <Canvas Name="DetailsVector">
                                                 <Path Stretch="Fill" Width="80" Height="80" Style="{StaticResource VectorIcon}" Data="M63.11202,44.563277 L63.11202,77.750766 C63.054468,79.962726 64.12211,80.586612 66.721163,80.845889 L70.898325,80.926913 70.898325,85.075351 38.307615,85.075351 38.307615,80.926913 42.897657,80.845889 C45.642672,80.764865 46.302443,79.727756 46.5068,77.750766 L46.5068,52.784797 C46.53599,48.83163 41.255316,49.452277 37.534407,49.569762 L37.534407,45.458594 z M53.172586,20.256421 C54.792646,20.256421 56.412706,20.663499 57.86434,21.477654 60.767603,23.105963 62.556086,26.115201 62.556086,29.371819 62.556086,32.628438 60.767603,35.637677 57.864336,37.265986 54.961073,38.894296 51.3841,38.894296 48.480833,37.265986 45.57757,35.637677 43.789087,32.628438 43.789083,29.371819 43.789087,26.115201 45.57757,23.105962 48.480837,21.477654 49.932467,20.663499 51.552526,20.256421 53.172586,20.256421 z M54.216364,8.1024134 C28.893152,8.1024132 8.3409793,28.066762 8.3409791,52.665694 8.3409793,77.264621 28.893152,97.228976 54.216364,97.228976 79.539576,97.228976 100.09175,77.264621 100.09175,52.665694 100.09175,28.066762 79.539576,8.1024132 54.216364,8.1024134 z M54.216364,0 C84.143801,-9.5367432E-07 108.43273,23.59423 108.43273,52.665694 108.43273,81.737155 84.143801,105.33139 54.216364,105.33139 24.288931,105.33139 0,81.737155 0,52.665694 0,23.59423 24.288931,-9.5367432E-07 54.216364,0 z" Canvas.Left="427" Canvas.Top="-494"/>
                                                 <Canvas.RenderTransform>
@@ -133,10 +137,11 @@
                                                 </Canvas.RenderTransform>
                                             </Canvas>
                                         </ToggleButton>
-                                        <Button Style="{DynamicResource ButtonGameEdit}" x:Name="PART_ButtonMoreActions" Opacity="0.85" Focusable="False" FontSize="18" Width="35" Height="35" Margin="0,450,0,0" Padding="0" Cursor="Hand">
+                                        <Button Style="{DynamicResource ButtonGameEdit}" x:Name="PART_ButtonMoreActions" Opacity="0.85" Focusable="False" FontSize="18" Width="35" Height="35" Margin="0,450,0,0" Padding="0" Cursor="Hand" ToolTipService.ToolTip="Open Playnite Menu">
                                             <Path Style="{StaticResource VectorIcon}" Stretch="Fill" Width="17" Height="17" Data="m 12.017193 16.202377 a 4.1923406 4.1923406 0 0 1 -4.192339 -4.19234 4.1923406 4.1923406 0 0 1 4.192339 -4.1923414 4.1923406 4.1923406 0 0 1 4.192342 4.1923414 4.1923406 4.1923406 0 0 1 -4.192342 4.19234 m 8.89974 -3.030464 c 0.04791 -0.3833 0.08384 -0.7666 0.08384 -1.161876 0 -0.395279 -0.03594 -0.790556 -0.08384 -1.197813 L 23.444317 8.8597913 C 23.6719 8.68012 23.731791 8.3567105 23.588054 8.0931924 L 21.19243 3.9487643 C 21.048693 3.6852457 20.725284 3.5774426 20.461766 3.6852457 L 17.479214 4.8830572 C 16.856352 4.4159106 16.209535 4.0086547 15.454912 3.7092019 L 15.011723 0.53500108 C 14.963809 0.24752629 14.712269 0.0319202 14.412817 0.0319202 H 9.6215717 c -0.2994535 0 -0.5509933 0.21560609 -0.5989059 0.50308088 L 8.5794752 3.7092019 C 7.824854 4.0086547 7.1780356 4.4159106 6.5551737 4.8830572 L 3.5726227 3.6852457 c -0.2635185 -0.1078031 -0.5869276 0 -0.730665 0.2635186 L 0.44633444 8.0931924 C 0.29061892 8.3567105 0.36248711 8.68012 0.59007182 8.8597913 L 3.1174543 10.812224 c -0.047912 0.407257 -0.083847 0.802534 -0.083847 1.197813 0 0.395276 0.035935 0.778576 0.083847 1.161876 l -2.52738248 1.988366 c -0.2275842 0.179673 -0.2994529 0.503081 -0.14373738 0.766599 l 2.39562336 4.144431 c 0.1437374 0.263517 0.4671464 0.359342 0.730665 0.263517 l 2.9825509 -1.209789 c 0.6228619 0.479125 1.2696804 0.88638 2.0243015 1.185833 l 0.4431906 3.174202 c 0.047912 0.287474 0.2994524 0.503079 0.5989059 0.503079 h 4.7912453 c 0.299452 0 0.550994 -0.215605 0.598906 -0.503079 l 0.443189 -3.174202 c 0.754623 -0.31143 1.40144 -0.706708 2.024302 -1.185833 l 2.982552 1.209789 c 0.263518 0.09583 0.586927 0 0.730664 -0.263517 l 2.395624 -4.144431 c 0.143737 -0.263518 0.08384 -0.586926 -0.143737 -0.766599 z"/>
                                         </Button>
-										<Button Style="{DynamicResource ButtonGameEdit}" x:Name="PART_GaCustomButton" Opacity="0.85" Focusable="False" FontSize="18" Width="35" Height="35" Margin="10,450,0,0" Padding="0" Cursor="Hand">
+										<Button Style="{DynamicResource ButtonGameEdit}" x:Name="PART_GaCustomButton" Opacity="0.85" Focusable="False" FontSize="18" Width="35" Height="35" Margin="10,450,0,0" Padding="0" Cursor="Hand" ToolTipService.ToolTip="Open Game Activity Window">
+											
                                             <Canvas Name="ActivityVector">
 												<Path Stretch="Fill" Width="80" Height="80" Style="{StaticResource VectorIcon}" Data="m 271.1864 490.54239 254.90105 0 0 1024.00001 -254.90105 0 z m -382.35154 -1365.33332 254.90105 0 0 2389.33333 -254.90105 0 z m -382.35157 682.66667 254.90105 0 0 1706.66666 -254.90105 0 z m -382.35156 -1024.00004 254.90105 0 0 2730.6667 -254.90105 0 z m -95.5868 -683.0297 c -88.25943 0 -159.31313 190.2933 -159.31313 426.6667 l 0 3242.9166 c 0 236.3734 71.0537 426.6667 159.31313 426.6667 l 1593.13154 0 c 88.25948 0 159.31315 -190.2933 159.31315 -426.6667 l 0 -3242.9166 c 0 -236.3734 -71.05367 -426.6667 -159.31315 -426.6667 l -1593.13154 0 z m 0.49786 341.6667 1592.13582 0 c 17.92771 0 32.36049 38.6533 32.36049 86.6666 l 0 3240.0834 c 0 48.0133 -14.43278 86.6666 -32.36049 86.6666 l -1592.13582 0 c -17.92771 0 -32.36049 -38.6533 -32.36049 -86.6666 l 0 -3240.0834 c 0 -48.0133 14.43278 -86.6666 32.36049 -86.6666 z" Canvas.Left="427" Canvas.Top="-494"/>
                                                 <Canvas.RenderTransform>
@@ -228,6 +233,7 @@
                                             </Grid.RowDefinitions>
                                             <Button Grid.Column="0" Grid.RowSpan="2" Name="PART_ButtonPlayAction" Cursor="Hand"
                                                     HorizontalAlignment="Left" Style="{DynamicResource PlayButton}" Margin="0,15,0,0"/>
+												
 											<Button Grid.Column="0" Grid.RowSpan="2" Name="PART_ButtonContextAction" Cursor="Hand"
                                                     HorizontalAlignment="Left" Style="{DynamicResource ContextButton}" Margin="0,15,0,0"/>
                                             <StackPanel Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,15,0,0">
