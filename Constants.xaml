@@ -19,11 +19,11 @@
 
     <Color x:Key="BlackColor">#FF000000</Color>
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
-    <Color x:Key="TextColor">#f2f2f2</Color>
-    <Color x:Key="TextColorDarker">#a3a3a3</Color>
+    <Color x:Key="TextColor">#FFFFFF</Color>
+    <Color x:Key="TextColorDarker">#FF626164</Color>
     <Color x:Key="TextColorDark">#FF000000</Color>
-    <Color x:Key="MainColor">#FF65636F</Color>
-    <Color x:Key="MainColorDark">#FF25282F</Color>
+    <Color x:Key="MainColor">#FF262B33</Color>
+    <Color x:Key="MainColorDark">#FF2C3139</Color>
     <Color x:Key="HoverColor">#247BA0</Color>
     <Color x:Key="GlyphColor">#55CDFF</Color>
     <Color x:Key="HighlightGlyphColor">#696773</Color>
@@ -32,14 +32,15 @@
     <Color x:Key="BackgroundToneColor">#2C3A67</Color>
     <Color x:Key="GridItemBackgroundColor">#151e3d</Color>
     <Color x:Key="PanelSeparatorColor">#662C3A67</Color>
+    <Color x:Key="WindowBackgroundColor">#FF262F39</Color>
 	
 	
 	<!-- darklinkpower ExtraMetadata plugin -->
     <sys:Boolean x:Key="UseAbsoluteExtraMetadataPath">true</sys:Boolean>
     <sys:String x:Key="ExtraMetadataPath">C:\Users\azure\AppData\Roaming\Playnite</sys:String>
 	<sys:Double x:Key="MaxLogoWidth">500</sys:Double>
-	<sys:Double x:Key="MaxLogoHeight">200</sys:Double>
-	<!--End Extrametadata plugin-->
+	<sys:Double x:Key="MaxLogoHeight">200</sys:Double>    
+    <!--End Extrametadata plugin-->
 
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="Transparent" />
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
@@ -72,7 +73,7 @@
     <SolidColorBrush x:Key="PositiveRatingBrush" Color="#78ffa0" />
     <SolidColorBrush x:Key="NegativeRatingBrush" Color="#ff6b6b" />
     <SolidColorBrush x:Key="MixedRatingBrush" Color="#fffca1" />
-	<SolidColorBrush x:Key="WindowBackgourndBrush" Color="#0420BEE5"/>
+	<SolidColorBrush x:Key="WindowBackgourndBrush" Color="{DynamicResource WindowBackgroundColor}"/>
 	<Visibility x:Key="ShowGameActivityTop">Visible</Visibility>
 	<Visibility x:Key="ShowHLTBData">Visible</Visibility>
 	<Visibility x:Key="ShowAchievements">Visible</Visibility>

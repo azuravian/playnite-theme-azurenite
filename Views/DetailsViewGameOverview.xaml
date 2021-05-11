@@ -27,12 +27,28 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DetailsViewGameOverview}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{DynamicResource DetailsScrollViewer}" d:DesignWidth="1280" d:DesignHeight="1280" d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameDetailsIntance}">
+                        
+
                         <Grid Background="#262b33">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="485"/>
                                 <RowDefinition Height="599*"/>
                                 <RowDefinition Height="561*"/>
                             </Grid.RowDefinitions>
+                            <Grid Background="#000000" Grid.RowSpan="3" IsHitTestVisible="False">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Panel.ZIndex" Value="0" />
+                                        <Setter Property="Opacity" Value="0" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=VideoPlaybackToggleButton, Path=IsChecked}" Value="True">
+                                                <Setter Property="Panel.ZIndex" Value="5"></Setter>
+                                                <Setter Property="Opacity" Value="0.75"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                            </Grid>
                             <FadeImage x:Name="PART_ImageBackground" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                                 <FadeImage.ImageOpacityMask>
                                     <RadialGradientBrush GradientOrigin="0.5,0" Center="0.5,0" RadiusX="2" RadiusY="1">
@@ -46,7 +62,31 @@
 							
 							<!--Logo-->
 							<Grid Grid.Row="0" Height="395" HorizontalAlignment="{DynamicResource LogoHorizontalAlignment}" VerticalAlignment="Top" Margin="10, 10, 10, 10" >
-								<TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed" VerticalAlignment="Bottom">
+								<TextBlock Name="VideoSelection" Foreground="White" Visibility="Collapsed">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="VideoTrailer.mp4"/>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Name="VideoTrailerPath" Foreground="White" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text">
+                                                <Setter.Value>
+                                                    <MultiBinding StringFormat="{}{0}{1}{2}{3}{4}">
+                                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
+                                                        <Binding Source="\ExtraMetadata\games\"/>
+                                                        <Binding Path="Game.Id"/>
+                                                        <Binding Source="\"/>
+                                                        <Binding ElementName="VideoSelection" Path="Text"/>
+                                                    </MultiBinding>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed" VerticalAlignment="Bottom">
 									<TextBlock.Style>
 										<Style TargetType="TextBlock">
 											<Setter Property="Text">
@@ -66,7 +106,7 @@
 									MaxHeight="{DynamicResource MaxLogoHeight}"
 									Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" 
 									HorizontalAlignment="Center" VerticalAlignment="{DynamicResource LogoVerticalAlignment}"
-									StretchDirection="DownOnly" Tag="{DynamicResource UseAbsoluteExtraMetadataPath}">
+									Tag="{DynamicResource UseAbsoluteExtraMetadataPath}">
 									<Image.Style>
 										<Style TargetType="Image">
 											<Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text}"/>
@@ -108,6 +148,90 @@
 								</TextBlock>
 							</Grid>
 							<!--End Logo-->
+                            <!--Video-->
+                            <Grid MaxWidth="1024" Panel.ZIndex="1000">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid x:Name="VideoGridContainer" HorizontalAlignment="Right">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Grid.ColumnSpan" Value="1" />
+                                            <Setter Property="Grid.Column" Value="3" />
+                                            <Setter Property="Margin" Value="0,0,0,0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=VideoResizeToggleButton,Path=IsChecked}" Value="False">
+                                                    <Setter Property="Grid.ColumnSpan" Value="1" />
+                                                    <Setter Property="Grid.Column" Value="2" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=VideoResizeToggleButton,Path=IsChecked}" Value="True">
+                                                    <Setter Property="Grid.ColumnSpan" Value="2" />
+                                                    <Setter Property="Grid.Column" Value="1" />
+                                                    <Setter Property="Margin" Value="10,0,0,0" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=VideoResizeToggleButton,Path=IsChecked}" Value="{x:Null}">
+                                                    <Setter Property="Grid.ColumnSpan" Value="3" />
+                                                    <Setter Property="Grid.Column" Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <!--Viewbox to keep size and elements consistent when video has not loaded-->
+                                    <Viewbox VerticalAlignment="Top">
+                                        <Border Width="622" Height="350"/>
+                                        <Viewbox.Style>
+                                            <Style TargetType="Viewbox">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=VideoTrailer,Path=Source}" Value="">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Viewbox.Style>
+                                    </Viewbox>
+                                    <!--MediaElement causes exception on the Blend design preview-->
+                                    <MediaElement x:Name="VideoTrailer" MediaElementBehaviors.Repeat="True" 
+                                                    Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <MediaElement.Style>
+                                            <Style>
+                                                <Setter Property="MediaElement.Source" Value="" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True">
+                                                        <Setter Property="MediaElement.Source" Value="{Binding ElementName=VideoTrailerPath, Path=Text}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=VideoPlaybackToggleButton,Path=IsChecked}" Value="False">
+                                                        <Setter Property="MediaElement.Source" Value="" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=PART_ControlGameView, Path=IsVisible}" Value="False">
+                                                        <Setter Property="MediaElement.Source" Value="" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=VideoAudioToggleButton,Path=IsChecked}" Value="True">
+                                                        <DataTrigger.EnterActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Volume" From="0" To="0.5" Duration="0:0:0.2"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.EnterActions>
+                                                        <DataTrigger.ExitActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Volume" From="0.5" To="0" Duration="0:0:0.2"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.ExitActions>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </MediaElement.Style>
+                                    </MediaElement>
+                                </Grid>
+                            </Grid>
+                            <!--End Video-->
+                            
 							
                             <Grid HorizontalAlignment="Stretch" Margin="10,0,20,0" Grid.RowSpan="3" Height="Auto">
                                 <Grid.RowDefinitions>
@@ -149,6 +273,29 @@
                                                 </Canvas.RenderTransform>
                                             </Canvas>
 						                </Button>
+                                        <ToggleButton Style="{DynamicResource ButtonMore}" x:Name="VideoPlaybackToggleButton" Focusable="False" FontSize="18" Width="35" Height="35" Margin="10,450,10,0" Padding="0" Cursor="Hand" ToolTipService.ToolTip="Click to Play Video">
+                                            <Canvas Name="PlaybackVector">
+                                                <Path Stretch="Fill" Width="80" Height="80" Style="{StaticResource VectorIcon}" Data="F1 M 15.996094 3.125 L 3.720703 7.597656 L 3.037109 5.722656 L 15.3125 1.259766 Z M 16.884766 15.996094 L 3.740234 15.996094 L 3.740234 7.695312 L 16.884766 7.695312 Z M 15.244141 3.134766 L 15.244141 1.542969 L 14.375 1.855469 L 14.375 3.457031 Z M 13.515625 3.769531 L 13.515625 2.167969 L 12.646484 2.480469 L 12.646484 4.091797 Z M 11.728516 4.384766 L 11.728516 2.802734 L 10.859375 3.115234 L 10.859375 4.707031 Z M 16.640625 9.453125 L 16.09375 7.949219 L 15.166016 7.949219 L 15.712891 9.453125 Z M 14.746094 9.453125 L 14.199219 7.949219 L 13.271484 7.949219 L 13.818359 9.453125 Z M 9.990234 5.058594 L 9.990234 3.457031 L 9.121094 3.769531 L 9.121094 5.371094 Z M 12.919922 9.453125 L 12.373047 7.949219 L 11.445312 7.949219 L 11.992188 9.453125 Z M 8.203125 5.673828 L 8.203125 4.082031 L 7.324219 4.394531 L 7.324219 5.996094 Z M 11.025391 9.453125 L 10.478516 7.949219 L 9.550781 7.949219 L 10.097656 9.453125 Z M 6.494141 6.328125 L 6.494141 4.726562 L 5.615234 5.048828 L 5.615234 6.640625 Z M 9.160156 9.453125 L 8.613281 7.949219 L 7.685547 7.949219 L 8.232422 9.453125 Z M 4.697266 6.943359 L 4.697266 5.351562 L 3.828125 5.664062 L 3.828125 7.265625 Z M 7.275391 9.453125 L 6.71875 7.949219 L 5.800781 7.949219 L 6.337891 9.453125 Z M 5.429688 9.453125 L 4.873047 7.949219 L 3.945312 7.949219 L 4.492188 9.453125 Z " Canvas.Left="427" Canvas.Top="-494">
+                                                    <Path.Style>
+                                                        <Style TargetType="{x:Type Path}">
+                                                            <Setter Property="Fill" Value="#a3a3a3"></Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}"  Value="True">
+                                                                    <Setter Property="Fill" Value="White"/>
+                                                                    <Setter Property="Opacity" Value="1.00"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding ElementName=VideoPlaybackToggleButton, Path=IsChecked}" Value="True">
+                                                                    <Setter Property="Fill" Value="Red"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Path.Style>
+                                                </Path>
+                                                <Canvas.RenderTransform>
+                                                    <MatrixTransform Matrix="-0.26458333 0 0 0.26458333 123.22058 120.19643"/>
+                                                </Canvas.RenderTransform>
+                                            </Canvas>
+                                        </ToggleButton>
 									</StackPanel>
 									<!--Top Right Buttons End-->
 									
@@ -238,14 +385,14 @@
                                                     HorizontalAlignment="Left" Style="{DynamicResource ContextButton}" Margin="0,15,0,0"/>
                                             <StackPanel Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,15,0,0">
                                                 <Label x:Name="PART_ElemLastPlayed" Width="Auto" Height="27" Foreground="#b4b4b4" FontSize="21" FontFamily="Corbel" Typography.Capitals="AllSmallCaps" Content="{DynamicResource LOCLastPlayed}"/>
-                                                <TextBlock Grid.Row="1" x:Name="PART_TextLastActivity" VerticalAlignment="Center" TextBlock.Foreground="#626164" Width="Auto" Height="20"/>
+                                                <TextBlock Grid.Row="1" x:Name="PART_TextLastActivity" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource TextBrushDarker}" Width="Auto" Height="20"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="25,0,0,7">
                                                 <Path Stretch="Uniform" Fill="#FFB3B3B3" Width="30" Height="30" Data="m 817.76843 -21.374018 c -13.798 1.44153 -27.473 4.75149 -41 7.75109 -29.429 6.5263996 -56.882 13.90209958 -73.309 41.7787 -26.444 44.876 -1.064 105.745998 50.309 116.731998 7.14 1.527 14.704 2.554 22 1.896 13.232 -1.193 26.037 -5.089 39 -7.815 30.437 -6.401 58.993 -11.867 76.427 -40.812998 27.072 -44.9495 3.049 -105.1577004 -48.427 -117.57336 -8.13 -1.96094 -16.671 -2.82654 -25 -1.95643 m -276 1632.529818 -2 1 -2 -6 -15.982 -8.21 -18.018 -14.79 h -4 c -3.531 -5.34 -8.797 -10.11 -15 -12 l -7 -9 -9 -5 -17 -18 -2 1 -11 -13 -2 1 -5 -5 -1 -4 -2 1 -5 -5 -1 -4 -2 1 -1 -4 -2 1 -7 -11 -2 1 -1 -4 -2 1 -11 -15 -2 1 c -6.37 -13.9 -23.404 -31.54 -39 -34 -7.489 -6.53 -19.406 -7.49 -28.963 -7.65 -29.233 -0.48 -58.748 15.31 -72.483 41.65 -10.9 20.9 -12.581 46.12 -3.39 68 3.774 8.98 9.854 16.71 14.836 25 l 2 -1 12 17 2 -1 4 8 2 -1 22 26 2 -1 1 4 2 -1 8 8 9 12 2 -1 25 26 2 -1 c 4.842 7.5 14.495 16.9 23 20 l 9 10 2 -1 c 3.579 5.22 8.966 9.95 15 12 v 2 l 2 -1 c 3.913 5.88 10.068 9.61 15.595 13.88 13.534 10.44 28.044 18.69 42.405 27.84 54.159 34.5 112.013 63.47 172 86.35 183.9 70.15 387.90997 82.15 578.99997 35.05 89.89 -22.16 175.76 -57.23 256 -103.27 92.82 -53.25 176.13 -123.72 245.71 -204.85 78.05 -91 139.36 -196 179.56 -309 86.75 -243.83 69.76 -519.57803 -43.54 -752.00003 -35.96 -73.771 -81.92 -142.839 -135.45 -205 -71.64 -83.183 -157.99 -154.082 -253.28 -208.570998 -70.41 -40.2588 -145.68 -72.0899 -224 -93.3338004 -28.67 -7.7777 -58.43 -16.1931996 -88 -19.6808896 -24.81 -2.92676 -49.91 3.78999 -67.85 21.73208958 -35.65 35.63840042 -27.44 98.23660042 15.85 123.74159842 14.06 8.281 30.29 10.137 46 13.315 19.87 4.019 39.51 8.933 59 14.512 59.89 17.142 117.6 41.301 172 71.619 102.05 56.874 191.93 136.309 260.82 230.666 95.36 130.624 151.22 291.177 156.12 453 2.91 95.89003 -10.81 193.06003 -41.63 284.00003 -37.59 110.9 -98.93 213.87 -179.45 299 -67.92 71.82 -148.8 131.27 -237.86 174.22 -156.78 75.6 -338.227 99.68 -508.99997 65.58 -76.622 -15.3 -152.176 -40.6 -221 -77.89 -22.582 -12.24 -47.556 -23.88 -67 -40.91 m -10 -1527.514028 c -18.758 2.146 -34.132 11.342 -50 20.918998 -24.905 15.031 -51.2 29.693 -61.588 58.595 -13.14 36.56 2.697 79.258 37.588 97.056 14.5 7.396 30.928 9.269 47 7.638 18.371 -1.865 32.823 -12.265 48 -21.754 13.629 -8.521 28.91 -15.713 40.859 -26.589 10.461 -9.521 17.706 -21.865 21.73 -35.351 15.757 -52.813 -28.452 -106.821998 -83.589 -100.513998 m -235 194.025998 c -32.489 4.1 -50.816 27.469 -69.999 51.488 -15.6 19.533 -29.984 38.164 -31.799 64 -3.448 49.106 40.689 88.56 88.798 82.488 16.911 -2.134 32.738 -9.648 44.901 -21.634 9.364 -9.228 16.721 -20.625 24.939 -30.854 15.236 -18.964 29.689 -35.748 31.879 -61 4.335 -49.998 -39.294 -90.726 -88.719 -84.488 m 699 7 c -25.484 3.223 -47.082 21.451 -53.547 46.488 -3.444 13.339 -2.453 27.356 -2.453 41 v 63 316 98 30 c 0 5.025 0.79 10.895 -0.546 15.785 -1.241 4.542 -5.658 6.492 -9.462 8.575 -7.248 3.972 -14.61 7.679 -21.992 11.393 -31.155 15.673 -62.028 31.995 -93 48.032 -124.966 64.70503 -249.576 130.16503 -375 193.97503 -14.772 7.52 -27.672 17.66 -34.464 33.24 -16.763 38.44 7.184 84.14 49.464 89.49 23.481 2.97 41.973 -8.34 62 -18.71 27.964 -14.47 56.348 -28.26 84 -43.33 26.98 -14.7 54.715 -28.11 82 -42.23 81.988 -42.46 164.433 -84.14 246 -127.39 32.773 -17.38 65.825 -34.48 98.99997 -51.08003 8.74 -4.37 17.27 -9.11 26 -13.5 3.89 -1.96 9.66 -3.84 11.82 -7.94 2.96 -5.576 1.18 -15.173 1.18 -21.31 v -49 -178 -352 c 0 -14.982 1.94 -31.46 -2.27 -46 -8.53 -29.488 -38.54 -48.306 -68.72997 -44.488 m -855 254.039 c -23.011 3.272 -43.613596 17.557 -55.425596 37.449 -5.6935 9.588 -8.9529 20.576 -12.757 31 -7.3255 20.074 -16.8555 42.238 -15.6772 64 2.506 46.284 44.182396 80.18 89.859796 73.919 23.485 -3.219 44.789 -17.265 56.572 -37.919 6.374 -11.172 9.715 -23.867 13.761 -36 6.429 -19.276 15.683 -38.181 14.528 -59 -2.596 -46.792 -44.949 -79.976 -90.861 -73.449 m -57.999996 297 c -30.9055 4.394 -56.6567 28.25 -64.0091 58.449 -3.4527 14.182 -1.9909 29.514 -1.9909 44 0 18.357 -1.5302 37.29 4.2682 55 11.5208 35.18003 48.3089 57.24003 84.731796 52.26003 31.764 -4.35 58.715 -27.66 65.908 -59.26003 3.425 -15.045 1.315 -29.818 1.11 -45 -0.23 -17.002 2.141 -34.459 -2.82 -51 -11.231 -37.446 -48.933 -59.889 -87.197996 -54.449 m 49.999996 298.91903 c -9.801 1.04 -19.159 3.41 -28 7.83 -7.253696 3.63 -14.087996 8.18 -19.905796 13.86 -18.4623 18 -26.2633 44.54 -22.2958 69.84 2.2523 14.36 8.3516 28.43 13.3941 42 4.8729 13.11 9.0916 27.28 16.8857 39 16.427596 24.71 45.515796 37.84 74.921796 34.61 43.021 -4.73 71.977 -43.44 68.793 -85.61 -1.264 -16.74 -9.24 -32.45 -14.971 -48 -4.877 -13.24 -8.33 -27.01 -16.063 -39 -15.333 -23.77 -44.695 -37.49 -72.759 -34.53 m 408 465.53 1 1 -1 -1 m -2 3 1 1 z"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="3" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,15,0,0">
                                                 <Label Grid.Row="1" x:Name="PART_ElemPlayTime" Width="Auto" Height="27" Foreground="#b4b4b4" FontSize="21" FontFamily="Corbel" Typography.Capitals="AllSmallCaps" Content="{DynamicResource LOCTimePlayed}"/>
-                                                <TextBlock Grid.Row="1" x:Name="PART_TextPlayTime" VerticalAlignment="Center" TextBlock.Foreground="#626164" Width="Auto" Height="20"/>
+                                                <TextBlock Grid.Row="1" x:Name="PART_TextPlayTime" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource TextBrushDarker}" Width="Auto" Height="20"/>
                                             </StackPanel>
 											
 											<StackPanel Grid.Column="4" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="25,0,0,7" Tag="{DynamicResource Sc_HasData}">
@@ -432,7 +579,7 @@
 			
                                             <StackPanel Grid.Column="9" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,15,0,0">
                                                 <Label Grid.Column="3" x:Name="PART_ElemCompletionStatus" Width="Auto" Height="27" Foreground="#b4b4b4" FontSize="21" FontFamily="Corbel" Typography.Capitals="AllSmallCaps" Content="{DynamicResource LOCCompletionStatus}"/>
-                                                <TextBlock Grid.Row="1" x:Name="PART_TextCompletionStatus" VerticalAlignment="Center" TextBlock.Foreground="#626164" Width="Auto" Height="20"/>
+                                                <TextBlock Grid.Row="1" x:Name="PART_TextCompletionStatus" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource TextBrushDarker}" Width="Auto" Height="20"/>
                                             </StackPanel>
 										</Grid>
 										<!--Play Row End-->
@@ -445,7 +592,7 @@
                                     <StackPanel DockPanel.Dock="Left" Margin="15,0,0,0">
 									
 										<!--Image Row-->
-                                        <Grid Grid.Row="1" Background="#34000000">
+                                        <Grid Grid.Row="1" Background="{DynamicResource WindowBackgourndBrush}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
@@ -467,61 +614,61 @@
                                                 </Image.Effect>
                                             </Image>
                                             <GridEx Height="150" ColumnCount="2" AutoLayoutColumns="2" RowCount="20" Grid.Column="1" Margin="15,0,0,0">
-                                                <Label Padding="0" Name="PART_ElemLibrary" Content="{DynamicResource LOCGameProviderTitle}" Margin="0,0,20,0" Foreground="#626164" Height="30"/>
+                                                <Label Padding="0" Name="PART_ElemLibrary" Content="{DynamicResource LOCGameProviderTitle}" Margin="0,0,20,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonLibrary" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
-                                                <Label Padding="0" Name="PART_ElemPlatform" Content="{DynamicResource LOCPlatformTitle}" Margin="0,0,20,0" Foreground="#626164" Height="30"/>
+                                                <Label Padding="0" Name="PART_ElemPlatform" Content="{DynamicResource LOCPlatformTitle}" Margin="0,0,20,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonPlatform" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
-                                                <Label Padding="0" Name="PART_ElemDevelopers" Content="{DynamicResource LOCDeveloperLabel}" Margin="0,0,20,0" Foreground="#626164" Height="30"/>
+                                                <Label Padding="0" Name="PART_ElemDevelopers" Content="{DynamicResource LOCDeveloperLabel}" Margin="0,0,20,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <ItemsControl Padding="0,3,0,0" Name="PART_ItemsDevelopers" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
-                                                <Label Padding="0" Name="PART_ElemPublishers" Content="{DynamicResource LOCPublisherLabel}" Margin="0,0,20,0" Foreground="#626164" Height="30"/>
+                                                <Label Padding="0" Name="PART_ElemPublishers" Content="{DynamicResource LOCPublisherLabel}" Margin="0,0,20,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <ItemsControl Padding="0,3,0,0" Name="PART_ItemsPublishers" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
-                                                <Label Padding="0" Name="PART_ElemAgeRating" Content="{DynamicResource LOCAgeRatingLabel}" Margin="0,0,20,0" Foreground="#626164" Height="30"/>
+                                                <Label Padding="0" Name="PART_ElemAgeRating" Content="{DynamicResource LOCAgeRatingLabel}" Margin="0,0,20,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonAgeRating" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
                                             </GridEx>
                                             <GridEx Height="150" ColumnCount="20" AutoLayoutColumns="2" RowCount="20" Grid.Column="2" Margin="15,0,0,0">
-                                                <Label Name="PART_ElemReleaseDate" Content="{DynamicResource LOCGameReleaseDateTitle}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemReleaseDate" Content="{DynamicResource LOCGameReleaseDateTitle}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonReleaseDate" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#d3d3d3" Height="30"/>
-                                                <Label Name="PART_ElemGenres" Content="{DynamicResource LOCGenreLabel}" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemGenres" Content="{DynamicResource LOCGenreLabel}" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <ScrollViewer VerticalScrollBarVisibility="Hidden" MaxHeight="120">
                                                     <ItemsControl Padding="0,3,0,0" Name="PART_ItemsGenres" Foreground="#d3d3d3" Margin="0,0,0,0"/>
                                                 </ScrollViewer>
                                             </GridEx>
                                             <GridEx Height="150" ColumnCount="2" AutoLayoutColumns="2" RowCount="20" Grid.Column="3" Margin="15,0,0,0">
-                                                <Label Name="PART_ElemCommunityScore" Content="{DynamicResource LOCCommunityScore}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemCommunityScore" Content="{DynamicResource LOCCommunityScore}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <TextBlock Name="PART_TextCommunityScore" VerticalAlignment="Center" Style="{DynamicResource TextBlockGameScore}" Margin="0,0,0,0"/>
 
-                                                <Label Name="PART_ElemCriticScore" Content="{DynamicResource LOCCriticScore}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemCriticScore" Content="{DynamicResource LOCCriticScore}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <TextBlock Name="PART_TextCriticScore" VerticalAlignment="Center" Style="{DynamicResource TextBlockGameScore}" Margin="0,0,0,0"/>
 
-                                                <Label Name="PART_ElemUserScore" Content="{DynamicResource LOCUserScore}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemUserScore" Content="{DynamicResource LOCUserScore}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <TextBlock Name="PART_TextUserScore" VerticalAlignment="Center" Style="{DynamicResource TextBlockGameScore}" Margin="0,0,0,0"/>
 
-                                                <Label Name="PART_ElemSeries" Content="{DynamicResource LOCSeriesLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemSeries" Content="{DynamicResource LOCSeriesLabel}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonSeries" VerticalAlignment="Center" Margin="0,0,0,0" Foreground="#d3d3d3"/>
 
-                                                <Label Name="PART_ElemVersion" Content="{DynamicResource LOCVersionLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemVersion" Content="{DynamicResource LOCVersionLabel}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonVersion" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3"/>
 												
-												<Label Name="PART_ElemSource" Content="{DynamicResource LOCSourceLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+												<Label Name="PART_ElemSource" Content="{DynamicResource LOCSourceLabel}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonSource" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#d3d3d3" Height="30"/>
 
-                                                <Label Name="PART_ElemRegion" Content="{DynamicResource LOCRegionLabel}" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemRegion" Content="{DynamicResource LOCRegionLabel}" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <Button Padding="0" Background="Transparent" Name="PART_ButtonRegion" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="#d3d3d3" Height="30"/>
                                             </GridEx>
                                             <GridEx ColumnCount="2" Grid.Column="4" AutoLayoutColumns="2" RowCount="50" Margin="15,0,0,0" Height="150">
-                                                <Label Name="PART_ElemTags" Content="{DynamicResource LOCTagsLabel}" Margin="0,0,30,0" VerticalAlignment="Top" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemTags" Content="{DynamicResource LOCTagsLabel}" Margin="0,0,30,0" VerticalAlignment="Top" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <ScrollViewer VerticalScrollBarVisibility="Hidden" MaxHeight="150">
                                                     <ItemsControl Padding="0,3,0,0" Name="PART_ItemsTags" VerticalAlignment="Top" Margin="0,0,0,0" Foreground="#d3d3d3"/>
                                                 </ScrollViewer>
                                             </GridEx>
                                             <GridEx ColumnCount="2" AutoLayoutColumns="2" RowCount="50" Grid.Column="5" Margin="15,0,0,0" Height="150">
-                                                <Label Name="PART_ElemCategories" Content="{DynamicResource LOCGameCategoriesTitle}" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemCategories" Content="{DynamicResource LOCGameCategoriesTitle}" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <ScrollViewer VerticalScrollBarVisibility="Hidden" MaxHeight="150">
                                                     <ItemsControl Padding="0,3,0,0" Name="PART_ItemsCategories" VerticalAlignment="Top" Margin="0,0,0,0"/>
                                                 </ScrollViewer>
                                             </GridEx>
                                             <GridEx ColumnCount="2" AutoLayoutColumns="2" RowCount="50" Grid.Column="6" Margin="15,0,0,0" Height="150">
-                                                <Label Name="PART_ElemFeatures" Content="{DynamicResource LOCFeaturesLabel}" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+                                                <Label Name="PART_ElemFeatures" Content="{DynamicResource LOCFeaturesLabel}" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
                                                 <ScrollViewer VerticalScrollBarVisibility="Hidden" MaxHeight="150">
                                                     <ItemsControl Padding="0,3,0,0" Name="PART_ItemsFeatures" VerticalAlignment="Top" Margin="0,0,0,0"/>
                                                 </ScrollViewer>
@@ -539,7 +686,7 @@
 														</Style.Triggers>
 													</Style>
 												</StackPanel.Style>
-												<Label Content="Game Activity" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="#626164" Height="30"/>
+												<Label Content="Game Activity" VerticalAlignment="Top" Margin="0,0,30,0" Foreground="{DynamicResource TextBrushDarker}" Height="30"/>
 												<StackPanel Name="PART_GameActivity_Graphic" Height="120" Width="500" Tag="{DynamicResource SelectGameActivity}">
 													<StackPanel.Style>
 														<Style>
@@ -617,7 +764,7 @@
 										<!--How Long to Beat End-->
 										
 										<!--Links-->
-                                        <Grid Margin="0,10,0,5" Height="35" Background="#07FFFFFF">
+                                        <Grid Margin="0,10,0,5" Height="35" Background="{DynamicResource NormalBrushDark}">
                                             <ItemsControl Name="PART_ItemsLinks" Margin="0,0,0,0" VerticalAlignment="Center">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -696,7 +843,7 @@
 												</Expander.Header>
 												<Border Background="{DynamicResource WindowBackgourndBrush}" Opacity="{DynamicResource DetailPanelOpacity}" BorderThickness="0" CornerRadius="6" Margin="0,10,0,0">
 													<StackPanel Background="{DynamicResource WindowBackgourndBrush}"> 
-														<HtmlTextView x:Name="PART_HtmlDescription"  Margin="10,10,10,10" HtmlFontSize="{DynamicResource FontSize}" HtmlFontFamily="{DynamicResource FontFamily}" HtmlForeground="white" LinkForeground="{DynamicResource GlyphColor}"
+														<HtmlTextView x:Name="PART_HtmlDescription"  Margin="10,10,10,10" HtmlFontSize="{DynamicResource FontSize}" HtmlFontFamily="{DynamicResource FontFamily}" HtmlForeground="{DynamicResource TextColor}" LinkForeground="{DynamicResource GlyphColor}"
 																  Height="Auto"/>
 													</StackPanel>
 												</Border>
